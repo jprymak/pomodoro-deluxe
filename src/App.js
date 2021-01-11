@@ -1,9 +1,9 @@
-import TaskCreatorForm from "./components/TaskCreatorForm"
+import TaskCreator from "./components/TaskCreator"
 
 function App() {
   return (
     <div className="App h-screen">
-      <TaskCreatorForm/>
+      <TaskCreator/>
     </div>
   );
 }
