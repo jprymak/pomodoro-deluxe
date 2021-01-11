@@ -1,4 +1,4 @@
-function TaskCreator() {
+function TaskCreatorForm() {
   return (
     <div className="container mx-auto h-screen flex items-center justify-center">
       <form className="flex flex-col items-start justify-start p-2 border-2 border-solid border-black rounded-md">
@@ -24,4 +24,4 @@ function TaskCreator() {
   );
 }
 
-export default TaskCreator;
+export default TaskCreatorForm;
