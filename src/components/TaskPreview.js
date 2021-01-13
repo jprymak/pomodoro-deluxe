@@ -9,10 +9,10 @@ function TaskPreview() {
         <div className="h-full w-2/6 bg-red-400"></div>
       </div>
       <div className="flex justify-around">
-      <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
+      <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20" disabled>
         Start
       </button>
-      <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
+      <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20" disabled>
         Pause
       </button>
       </div>
