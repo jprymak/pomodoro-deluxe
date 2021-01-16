@@ -2,7 +2,7 @@
 function CurrentSession(){
 
     return(
-        <div></div>
+        <div>Current Session</div>
     )
 }
 
