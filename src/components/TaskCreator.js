@@ -7,28 +7,63 @@ class TaskCreator extends React.Component {
     task: "",
     sessionLengthInMinutes: 25,
     breakLengthInMinutes: 5,
-    numberOfSessions: 4
+    numberOfSessions: 4,
+    previewBlocks: [
+      "session",
+      "break",
+      "session",
+      "break",
+      "session",
+      "break",
+      "session",
+    ],
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
   };
 
   handleTaskNameChange = (event) => {
-    this.setState({ task: event.target.value });
+    this.setState({ task: event.target.value }, () => {
+      this.createPreviewBlocks();
+    });
   };
 
   handleSessionLengthInMinutesChange = (event) => {
-    this.setState({ sessionLengthInMinutes: event.target.value });
+    this.setState({ sessionLengthInMinutes: event.target.value }, () => {
+      this.createPreviewBlocks();
+    });
   };
 
   handleBreakLengthInMinutesChange = (event) => {
-    this.setState({ breakLengthInMinutes: event.target.value });
+    this.setState({ breakLengthInMinutes: event.target.value }, () => {
+      this.createPreviewBlocks();
+    });
   };
 
   handleNumberOfSessionsChange = (event) => {
-    this.setState({ numberOfSessions: event.target.value });
+    this.setState({ numberOfSessions: event.target.value }, () => {
+      this.createPreviewBlocks();
+    });
+  };
+
+  createPreviewBlocks = () => {
+    this.setState(
+      (prevState) => {
+        const previewBlocks = [];
+        for (let i = 1; i <= this.state.numberOfSessions; i++) {
+          if (i < this.state.numberOfSessions) {
+            previewBlocks.push("session", "break");
+          } else {
+            previewBlocks.push("session");
+          }
+        }
+        return { previewBlocks };
+      },
+      () => {
+        console.log(this.state.previewBlocks);
+      }
+    );
   };
 
   render() {

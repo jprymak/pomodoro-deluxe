@@ -1,20 +1,42 @@
-function TaskPreview() {
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
+function TaskPreview({ formValue }) {
+  const {
+    task,
+    previewBlocks,
+    sessionLengthInMinutes,
+    breakLengthInMinutes,
+    numberOfSessions,
+  } = formValue;
+  const totalCycleLengthInMinutes = numberOfSessions*sessionLengthInMinutes + breakLengthInMinutes *(numberOfSessions-1)
+  const sessionBlockWidth = sessionLengthInMinutes/totalCycleLengthInMinutes*100;
+  const breakBlockWidth = breakLengthInMinutes/totalCycleLengthInMinutes*100;
   return (
     <div className="h-20 w-full">
-        <h2 className="mx-auto w-full text-center mb-2">Preview</h2>
+      <h2 className="mx-auto w-full text-center mb-2">Preview</h2>
+      <h2 className="mx-auto w-full text-center mb-2">{task}</h2>
       <div className="w-full border-2 border-solid border-black rounded-md h-3/6 p-1 flex">
-        <div className="h-full w-1/6 bg-black"></div>
-        <div className="h-full w-2/6 bg-red-400"></div>
-        <div className="h-full w-1/6 bg-black"></div>
-        <div className="h-full w-2/6 bg-red-400"></div>
+        {previewBlocks.map((block) => {
+          return block == "session" ? (
+            <div key={uuidv4()} className="h-full bg-red-400" style={{width: `${sessionBlockWidth}%` }}></div>
+          ) : (
+            <div key={uuidv4()} className="h-full bg-black" style={{width: `${breakBlockWidth}%` }}></div>
+          );
+        })}
       </div>
       <div className="flex justify-around">
-      <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20" disabled>
-        Start
-      </button>
-      <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20" disabled>
-        Pause
-      </button>
+        <button
+          className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20 opacity-40"
+          disabled
+        >
+          Start
+        </button>
+        <button
+          className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20 opacity-40"
+          disabled
+        >
+          Pause
+        </button>
       </div>
     </div>
   );
