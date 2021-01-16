@@ -3,25 +3,29 @@ import TaskCreatorForm from "./TaskCreatorForm";
 import TaskPreview from "./TaskPreview";
 
 class TaskCreator extends React.Component {
-  state = {
-    task: "",
-    sessionLengthInMinutes: 25,
-    breakLengthInMinutes: 5,
-    numberOfSessions: 4,
-    previewBlocks: [
-      "session",
-      "break",
-      "session",
-      "break",
-      "session",
-      "break",
-      "session",
-    ],
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      task: "",
+      sessionLengthInMinutes: 25,
+      breakLengthInMinutes: 5,
+      numberOfSessions: 4,
+      previewBlocks: [
+        "session",
+        "break",
+        "session",
+        "break",
+        "session",
+        "break",
+        "session",
+      ],
+    };
+  }
+  
+  handleSubmit = (event)=>{
+    event.preventDefault()
+    this.props.onTaskCreation(this.state)
+  }
 
   handleTaskNameChange = (event) => {
     this.setState({ task: event.target.value }, () => {
@@ -67,6 +71,7 @@ class TaskCreator extends React.Component {
   };
 
   render() {
+    const {onSubmit} = this.props
     return (
       <div className="h-auto w-auto flex flex-col items-center justify-center">
         <TaskCreatorForm
