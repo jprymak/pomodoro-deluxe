@@ -11,7 +11,7 @@ class TaskManager extends React.Component {
 
 
   render() {
-    return <div className="w-full border-black"></div>;
+    return <div >Task Manager</div>;
   }
 }
 
