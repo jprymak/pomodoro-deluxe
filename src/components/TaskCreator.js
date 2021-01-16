@@ -7,24 +7,17 @@ class TaskCreator extends React.Component {
     super(props);
     this.state = {
       task: "",
-      sessionLengthInMinutes: 25,
-      breakLengthInMinutes: 5,
-      numberOfSessions: 4,
-      previewBlocks: [
-        "session",
-        "break",
-        "session",
-        "break",
-        "session",
-        "break",
-        "session",
-      ],
+      sessionLengthInMinutes: "",
+      breakLengthInMinutes: "",
+      numberOfSessions: "",
+      previewBlocks: [],
     };
   }
   
   handleSubmit = (event)=>{
     event.preventDefault()
     this.props.onTaskCreation(this.state)
+    this.setState({})
   }
 
   handleTaskNameChange = (event) => {
