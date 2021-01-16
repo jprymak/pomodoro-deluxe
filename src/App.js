@@ -28,7 +28,7 @@ class App extends React.Component {
               <TaskCreator onTaskCreation={this.handleTaskCreation} />
             </Route>
             <Route path="/task-manager">
-              <TaskManager />
+              <TaskManager tasks={this.state.tasks}/>
             </Route>
             <Route path="/">
               <CurrentSession />
