@@ -7,10 +7,10 @@ class TaskCreator extends React.Component {
     super(props);
     this.state = {
       task: "",
-      sessionLengthInMinutes: "",
-      breakLengthInMinutes: "",
-      numberOfSessions: "",
-      previewBlocks: [],
+      sessionLengthInMinutes: 25,
+      breakLengthInMinutes: 5,
+      numberOfSessions: 4,
+      previewBlocks: ["session", "break", "session", "break","session", "break","session"],
     };
   }
   
@@ -19,10 +19,10 @@ class TaskCreator extends React.Component {
     this.props.onTaskCreation(this.state)
     this.setState({
       task: "",
-      sessionLengthInMinutes: "",
-      breakLengthInMinutes: "",
-      numberOfSessions: "",
-      previewBlocks: [],
+      sessionLengthInMinutes: 25,
+      breakLengthInMinutes: 5,
+      numberOfSessions: 4,
+      previewBlocks: ["session", "break", "session", "break","session", "break","session"],
     })
   }
 
