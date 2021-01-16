@@ -17,7 +17,13 @@ class TaskCreator extends React.Component {
   handleSubmit = (event)=>{
     event.preventDefault()
     this.props.onTaskCreation(this.state)
-    this.setState({})
+    this.setState({
+      task: "",
+      sessionLengthInMinutes: "",
+      breakLengthInMinutes: "",
+      numberOfSessions: "",
+      previewBlocks: [],
+    })
   }
 
   handleTaskNameChange = (event) => {
