@@ -22,15 +22,27 @@ class TaskManager extends React.Component {
               breakLengthInMinutes,
             } = task;
             return (
-              <li key={uuidv4()} className="border border-solid rounded-md p-2 mb-4">
-                <h4 className="pb-2">{task.task}</h4>
-                <p>
-                  Total time:{" "}
-                  {numberOfSessions * sessionLengthInMinutes +
-                    breakLengthInMinutes * (numberOfSessions - 1)}{" "}
-                  minutes
-                </p>
-                <button className="p-1 self-center border-solid border border-black rounded-md mt-4">Start</button>
+              <li
+                key={uuidv4()}
+                className="border border-solid rounded-md p-3 mb-4"
+              >
+                <h4 className="pb-2 text-lg font-medium">{task.task}</h4>
+                <div className="flex justify-between">
+                  <div>
+                    <p>
+                      Total time:{" "}
+                      {numberOfSessions * sessionLengthInMinutes +
+                        breakLengthInMinutes * (numberOfSessions - 1)}{" "}
+                      minutes
+                    </p>
+                    <p>Sessions: {numberOfSessions}</p>
+                    <p>Break length: {breakLengthInMinutes} minutes</p>
+                  </div>
+
+                  <button className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6">
+                    Start
+                  </button>
+                </div>
               </li>
             );
           })}
