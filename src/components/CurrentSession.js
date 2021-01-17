@@ -26,11 +26,16 @@ class CurrentSession extends React.Component {
       (sessionLengthInMinutes / totalCycleLengthInMinutes) * 100;
     const breakBlockWidth =
       (breakLengthInMinutes / totalCycleLengthInMinutes) * 100;
+    const totalCycleLengthInSeconds = totalCycleLengthInMinutes * 60;
+    const timeLeftInSeconds = totalCycleLengthInSeconds - elapsedTimeInSeconds;
+    const hours = Math.floor(timeLeftInSeconds / 3600);
+    const minutes = Math.floor(timeLeftInSeconds % 3600) / 60;
+    const seconds = (timeLeftInSeconds % 3600) % 60;
 
     return (
       <div>
         <div>Current Session</div>
-        <Timer elapsedTimeInSeconds={elapsedTimeInSeconds} />
+        <Timer hours={hours} minutes={minutes} seconds={seconds} />
         <ProgressBar
           sessionLengthInMinutes={sessionLengthInMinutes}
           breakLengthInMinutes={breakLengthInMinutes}
