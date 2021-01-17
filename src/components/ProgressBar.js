@@ -1,16 +1,19 @@
-function Task({ currentSession }) {
+function ProgressBar({ currentSession }) {
   const {
     task,
-    sessionBlockWidth,
     sessionLengthInMinutes,
-    breakBlockWidth,
     breakLengthInMinutes,
     previewBlocks,
+    numberOfSessions
   } = currentSession;
+  const totalCycleLengthInMinutes = numberOfSessions*sessionLengthInMinutes + breakLengthInMinutes *(numberOfSessions-1)
+  const sessionBlockWidth = sessionLengthInMinutes/totalCycleLengthInMinutes*100;
+  const breakBlockWidth = breakLengthInMinutes/totalCycleLengthInMinutes*100;
   return (
     <div className="h-40 w-full">
       <h2 className="mx-auto w-full text-center mb-2">{task}</h2>
-      <div className="w-full border-2 border-solid border-black rounded-md h-3/6 p-1 flex">
+      <div>Time left: {``}</div>
+      <div className="w-96 border-2 border-solid border-black rounded-md h-3/6 p-1 flex">
         {previewBlocks.map((block) => {
           return block == "session" ? (
             <div
@@ -43,4 +46,4 @@ function Task({ currentSession }) {
   );
 }
 
-export default Task;
+export default ProgressBar;
