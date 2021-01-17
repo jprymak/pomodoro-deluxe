@@ -65,11 +65,17 @@ class App extends React.Component {
   };
 
   handleTaskPick = (task, indexToRemove) => {
+    const previousTask = this.state.currentSession
     this.setState({ currentSession: task }, () => {
       console.log(this.state.currentSession);
     });
     this.setState(prevState=>{
       const tasks = prevState.tasks.filter((task, index)=>index!==indexToRemove)
+      return {tasks}
+    })
+    this.setState(prevState=>{
+      console.log(previousTask)
+      const tasks = [...prevState.tasks, previousTask]
       return {tasks}
     })
   };
