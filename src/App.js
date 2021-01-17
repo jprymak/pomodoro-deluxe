@@ -9,6 +9,7 @@ import CurrentSession from "./components/CurrentSession";
 class App extends React.Component {
   state = {
     tasks: [],
+    currentSession: ""
   };
 
   handleTaskCreation = (newTask) => {
@@ -17,6 +18,10 @@ class App extends React.Component {
       return { tasks };
     });
   };
+
+  handleTaskPick = (task)=>{
+    this.setState({currentSession: task}, ()=>{console.log(this.state.currentSession)})
+  }
 
   render() {
     return (
@@ -28,7 +33,7 @@ class App extends React.Component {
               <TaskCreator onTaskCreation={this.handleTaskCreation} />
             </Route>
             <Route path="/task-manager">
-              <TaskManager tasks={this.state.tasks}/>
+              <TaskManager onTaskPick={this.handleTaskPick} tasks={this.state.tasks}/>
             </Route>
             <Route path="/">
               <CurrentSession />

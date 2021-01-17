@@ -10,7 +10,7 @@ class TaskManager extends React.Component {
   }
 
   render() {
-    const { tasks } = this.props;
+    const { tasks, onTaskPick } = this.props;
     return (
       <div>
         <h2 className="mb-10 text-center">Task Manager</h2>
@@ -39,7 +39,7 @@ class TaskManager extends React.Component {
                     <p>Break length: {breakLengthInMinutes} minutes</p>
                   </div>
 
-                  <button className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6">
+                  <button onClick={()=>{onTaskPick(task)}} className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6">
                     Start
                   </button>
                 </div>
