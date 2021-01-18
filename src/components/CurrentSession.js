@@ -7,7 +7,8 @@ class CurrentSession extends React.Component {
     super(props);
     this.state = {
       elapsedTimeInSeconds: 0,
-      isPaused: false
+      isPaused: false,
+      isRunning: false,
     };
     this.intervalID = null;
   }
@@ -23,32 +24,35 @@ class CurrentSession extends React.Component {
     }
   };
 
+  handleStart = () => {
+    this.setState({ isRunning: true });
+    this.startTimer();
+  };
+
   stopTimer = () => {
     window.clearInterval(this.intervalID);
-    this.intervalID =null;
-  }
+    this.intervalID = null;
+  };
 
-  handleStop = () =>{
+  handleStop = () => {
     this.stopTimer();
-    this.setState({elapsedTimeInSeconds: 0})
-  }
+    this.setState({ elapsedTimeInSeconds: 0, isRunning: false });
+  };
 
-  togglePause =()=>{
-    this.setState((prevState)=>{
-      const isPaused=!prevState.isPaused
-      if(this.state.isPaused){
-        this.startTimer()
+  togglePause = () => {
+    this.setState((prevState) => {
+      const isPaused = !prevState.isPaused;
+      if (this.state.isPaused) {
+        this.startTimer();
+      } else {
+        this.stopTimer();
       }
-      else {
-        this.stopTimer()
-      }
-      return {isPaused}
-    })
-    
-  }
+      return { isPaused };
+    });
+  };
 
   render() {
-    const { elapsedTimeInSeconds } = this.state;
+    const { elapsedTimeInSeconds, isRunning } = this.state;
     const {
       sessionLengthInMinutes,
       numberOfSessions,
@@ -67,7 +71,7 @@ class CurrentSession extends React.Component {
     const totalCycleLengthInSeconds = totalCycleLengthInMinutes * 60;
     const timeLeftInSeconds = totalCycleLengthInSeconds - elapsedTimeInSeconds;
     const hours = Math.floor(timeLeftInSeconds / 3600);
-    const minutes = Math.floor(timeLeftInSeconds % 3600/60);
+    const minutes = Math.floor((timeLeftInSeconds % 3600) / 60);
     const seconds = Math.floor(timeLeftInSeconds % 60);
 
     return (
@@ -83,18 +87,31 @@ class CurrentSession extends React.Component {
           task={task}
         />
         <div className="flex justify-around">
-          <button 
-          
-            onClick={this.startTimer}
-            className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20"
+          <button
+            disabled={isRunning}
+            onClick={this.handleStart}
+            className={`p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20 ${
+              isRunning ? "opacity-40 cursor-default" : ""
+            }`}
           >
             Start
           </button>
           <button
-          onClick={this.handleStop}
-          className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20"
-          >Stop</button>
-          <button onClick={this.togglePause} className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
+            disabled={!isRunning}
+            onClick={this.handleStop}
+            className={`p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20 ${
+              isRunning ? "" : "opacity-40 cursor-default"
+            }`}
+          >
+            Stop
+          </button>
+          <button
+            disabled={!isRunning}
+            onClick={this.togglePause}
+            className={`p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20 ${
+              isRunning ? "" : "opacity-40 cursor-default"
+            }`}
+          >
             Pause
           </button>
         </div>
