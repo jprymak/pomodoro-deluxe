@@ -28,6 +28,11 @@ class CurrentSession extends React.Component {
     this.intervalID =null;
   }
 
+  handleStop = () =>{
+    this.stopTimer();
+    this.setState({elapsedTimeInSeconds: 0})
+  }
+
   togglePause =()=>{
     this.setState((prevState)=>{
       const isPaused=!prevState.isPaused
@@ -78,12 +83,17 @@ class CurrentSession extends React.Component {
           task={task}
         />
         <div className="flex justify-around">
-          <button
+          <button 
+          
             onClick={this.startTimer}
             className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20"
           >
             Start
           </button>
+          <button
+          onClick={this.handleStop}
+          className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20"
+          >Stop</button>
           <button onClick={this.togglePause} className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
             Pause
           </button>
