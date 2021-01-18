@@ -8,15 +8,19 @@ class CurrentSession extends React.Component {
     this.state = {
       elapsedTimeInSeconds: 0,
     };
-    this.intervalID =  null;
+    this.intervalID = null;
   }
 
-  startTimer = ()=>{
-      this.intervalID = window.setInterval((prevState)=>{
-        const elapsedTimeInSeconds=prevState.elapsedTimeInSeconds +1
-        return {elapsedTimeInSeconds}
-      }, 1000)
-  }
+  startTimer = () => {
+    if (this.intervalID === null) {
+      this.intervalID = window.setInterval(() => {
+        this.setState((prevState) => {
+          const elapsedTimeInSeconds = prevState.elapsedTimeInSeconds + 1;
+          return { elapsedTimeInSeconds };
+        });
+      }, 1000);
+    }
+  };
 
   render() {
     const { elapsedTimeInSeconds } = this.state;
@@ -38,8 +42,8 @@ class CurrentSession extends React.Component {
     const totalCycleLengthInSeconds = totalCycleLengthInMinutes * 60;
     const timeLeftInSeconds = totalCycleLengthInSeconds - elapsedTimeInSeconds;
     const hours = Math.floor(timeLeftInSeconds / 3600);
-    const minutes = Math.floor(timeLeftInSeconds % 3600) / 60;
-    const seconds = (timeLeftInSeconds % 3600) % 60;
+    const minutes = Math.floor(timeLeftInSeconds % 3600/60);
+    const seconds = Math.floor(timeLeftInSeconds % 60);
 
     return (
       <div>
@@ -54,13 +58,16 @@ class CurrentSession extends React.Component {
           task={task}
         />
         <div className="flex justify-around">
-        <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
-          Start
-        </button>
-        <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
-          Pause
-        </button>
-      </div>
+          <button
+            onClick={this.startTimer}
+            className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20"
+          >
+            Start
+          </button>
+          <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
+            Pause
+          </button>
+        </div>
       </div>
     );
   }
