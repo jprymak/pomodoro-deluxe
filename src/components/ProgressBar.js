@@ -32,14 +32,7 @@ function ProgressBar(props) {
           );
         })}
       </div>
-      <div className="flex justify-around">
-        <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
-          Start
-        </button>
-        <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
-          Pause
-        </button>
-      </div>
+      
     </div>
   );
 }

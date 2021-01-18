@@ -8,7 +8,16 @@ class CurrentSession extends React.Component {
     this.state = {
       elapsedTimeInSeconds: 0,
     };
+    this.intervalID =  null;
   }
+
+  startTimer = ()=>{
+      this.intervalID = window.setInterval((prevState)=>{
+        const elapsedTimeInSeconds=prevState.elapsedTimeInSeconds +1
+        return {elapsedTimeInSeconds}
+      }, 1000)
+  }
+
   render() {
     const { elapsedTimeInSeconds } = this.state;
     const {
@@ -44,6 +53,14 @@ class CurrentSession extends React.Component {
           previewBlocks={previewBlocks}
           task={task}
         />
+        <div className="flex justify-around">
+        <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
+          Start
+        </button>
+        <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
+          Pause
+        </button>
+      </div>
       </div>
     );
   }
