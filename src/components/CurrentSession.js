@@ -7,6 +7,7 @@ class CurrentSession extends React.Component {
     super(props);
     this.state = {
       elapsedTimeInSeconds: 0,
+      isPaused: false
     };
     this.intervalID = null;
   }
@@ -21,6 +22,25 @@ class CurrentSession extends React.Component {
       }, 1000);
     }
   };
+
+  stopTimer = () => {
+    window.clearInterval(this.intervalID);
+    this.intervalID =null;
+  }
+
+  togglePause =()=>{
+    this.setState((prevState)=>{
+      const isPaused=!prevState.isPaused
+      if(this.state.isPaused){
+        this.startTimer()
+      }
+      else {
+        this.stopTimer()
+      }
+      return {isPaused}
+    })
+    
+  }
 
   render() {
     const { elapsedTimeInSeconds } = this.state;
@@ -64,7 +84,7 @@ class CurrentSession extends React.Component {
           >
             Start
           </button>
-          <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
+          <button onClick={this.togglePause} className="p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20">
             Pause
           </button>
         </div>
