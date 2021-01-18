@@ -52,7 +52,7 @@ class CurrentSession extends React.Component {
   };
 
   render() {
-    const { elapsedTimeInSeconds, isRunning } = this.state;
+    const { elapsedTimeInSeconds, isRunning, isPaused } = this.state;
     const {
       sessionLengthInMinutes,
       numberOfSessions,
@@ -112,7 +112,7 @@ class CurrentSession extends React.Component {
               isRunning ? "" : "opacity-40 cursor-default"
             }`}
           >
-            Pause
+            {isPaused ? "Resume" : "Pause"}
           </button>
         </div>
       </div>
