@@ -55,6 +55,7 @@ class App extends React.Component {
         "session",
       ],
     },
+    currentSessionState: {},
   };
 
   handleTaskCreation = (newTask) => {
@@ -65,20 +66,26 @@ class App extends React.Component {
   };
 
   handleTaskPick = (task, indexToRemove) => {
-    const previousTask = this.state.currentSession
+    const previousTask = this.state.currentSession;
     this.setState({ currentSession: task }, () => {
       console.log(this.state.currentSession);
     });
-    this.setState(prevState=>{
-      const tasks = prevState.tasks.filter((task, index)=>index!==indexToRemove)
-      return {tasks}
-    })
-    this.setState(prevState=>{
-      console.log(previousTask)
-      const tasks = [...prevState.tasks, previousTask]
-      return {tasks}
-    })
+    this.setState((prevState) => {
+      const tasks = prevState.tasks.filter(
+        (task, index) => index !== indexToRemove
+      );
+      return { tasks };
+    });
+    this.setState((prevState) => {
+      console.log(previousTask);
+      const tasks = [...prevState.tasks, previousTask];
+      return { tasks };
+    });
   };
+
+  handleSaveState = (state) =>{
+    this.setState({currentSessionState: state})
+  }
 
   render() {
     return (
@@ -96,7 +103,11 @@ class App extends React.Component {
               />
             </Route>
             <Route path="/">
-              <CurrentSession currentSession={this.state.currentSession} />
+              <CurrentSession
+                saveState={this.handleSaveState}
+                currentSession={this.state.currentSession}
+                currentSessionState={this.state.currentSessionState}
+              />
             </Route>
           </Switch>
         </Router>

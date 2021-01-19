@@ -23,6 +23,23 @@ class CurrentSession extends React.Component {
       }, 1000);
     }
   };
+  componentDidMount() {
+    const state = this.props.currentSessionState;
+    if (state) {
+      this.setState(state, () => {
+        if (this.state.isRunning === true && !this.state.isPaused) {
+          this.startTimer();
+        }
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.state.isRunning === true) {
+      this.stopTimer();
+    }
+    this.props.saveState(this.state);
+  }
 
   handleStart = () => {
     this.setState({ isRunning: true });
