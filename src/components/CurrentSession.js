@@ -96,6 +96,7 @@ class CurrentSession extends React.Component {
         <div>Current Session</div>
         <Timer hours={hours} minutes={minutes} seconds={seconds} />
         <ProgressBar
+        isPaused = {isPaused}
           sessionLengthInMinutes={sessionLengthInMinutes}
           breakLengthInMinutes={breakLengthInMinutes}
           sessionBlockWidth={sessionBlockWidth}

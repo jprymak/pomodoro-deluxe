@@ -5,11 +5,12 @@ function ProgressBar(props) {
     breakLengthInMinutes,
     previewBlocks,
     sessionBlockWidth,
-    breakBlockWidth
+    breakBlockWidth,
+    isPaused
   } = props;
   
   return (
-    <div className="h-40 w-full">
+    <div className={`h-40 w-full ${isPaused ? "opacity-40" : ""}`}>
       <h2 className="mx-auto w-full text-center mb-2">{task}</h2>
       <div className="w-96 border-2 border-solid border-black rounded-md h-3/6 p-1 flex">
         {previewBlocks.map((block) => {
