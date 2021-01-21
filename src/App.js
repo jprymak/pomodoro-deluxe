@@ -97,6 +97,15 @@ class App extends React.Component {
     });
   };
 
+  handleTaskDelete = (task, indexToRemove) =>{
+    this.setState((prevState) => {
+      const tasks = prevState.tasks.filter(
+        (task, index) => index !== indexToRemove
+      );
+      return { tasks };
+    });
+  }
+
   handleSaveState = (state) => {
     this.setState({ currentSession: state });
   };
@@ -113,6 +122,7 @@ class App extends React.Component {
             <Route path="/task-manager">
               <TaskManager
                 onTaskPick={this.handleTaskPick}
+                onTaskDelete = {this.handleTaskDelete}
                 tasks={this.state.tasks}
               />
             </Route>

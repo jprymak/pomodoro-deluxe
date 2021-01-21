@@ -10,7 +10,7 @@ class TaskManager extends React.Component {
   }
 
   render() {
-    const { tasks, onTaskPick } = this.props;
+    const { tasks, onTaskPick, onTaskDelete } = this.props;
     return (
       <div>
         <h2 className="mb-10 text-center">Task Manager</h2>
@@ -41,6 +41,9 @@ class TaskManager extends React.Component {
 
                   <button onClick={()=>{onTaskPick(task, index)}} className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6">
                     Start
+                  </button>
+                  <button onClick={()=>{onTaskDelete(task, index)}} className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6">
+                    Delete
                   </button>
                 </div>
               </li>
