@@ -84,7 +84,7 @@ class App extends React.Component {
     this.setState({ currentSession: task }, () => {
       console.log(this.state.currentSession);
     });
-    this.deleteTask(task, indexToRemove)
+    this.removeTask(task, indexToRemove)
     this.setState((prevState) => {
       console.log(previousTask);
       const tasks = [...prevState.tasks, previousTask];
@@ -93,10 +93,10 @@ class App extends React.Component {
   };
 
   handleTaskDelete = (task, indexToRemove) =>{
-    this.deleteTask(task, indexToRemove)
+    this.removeTask(task, indexToRemove)
   }
 
-  deleteTask(task, indexToRemove){
+  removeTask(task, indexToRemove){
     this.setState((prevState) => {
       const tasks = prevState.tasks.filter(
         (task, index) => index !== indexToRemove
