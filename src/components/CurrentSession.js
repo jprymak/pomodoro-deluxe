@@ -5,11 +5,7 @@ import Timer from "./Timer";
 class CurrentSession extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      elapsedTimeInSeconds: 0,
-      isPaused: false,
-      isRunning: false,
-    };
+    this.state = this.props.currentSession
     this.intervalID = null;
   }
 
@@ -24,14 +20,9 @@ class CurrentSession extends React.Component {
     }
   };
   componentDidMount() {
-    const state = this.props.currentSessionState;
-    if (state) {
-      this.setState(state, () => {
         if (this.state.isRunning === true && !this.state.isPaused) {
           this.startTimer();
         }
-      });
-    }
   }
 
   componentWillUnmount() {

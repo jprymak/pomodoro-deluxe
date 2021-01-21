@@ -23,7 +23,7 @@ class TaskManager extends React.Component {
             } = task;
             return (
               <li
-                key={uuidv4()}
+                key={task.id}
                 className="border border-solid rounded-md p-3 mb-4"
               >
                 <h4 className="pb-2 text-lg font-medium">{task.task}</h4>

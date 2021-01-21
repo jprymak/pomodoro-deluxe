@@ -2,6 +2,8 @@ import React from "react";
 import TaskCreatorForm from "./TaskCreatorForm";
 import TaskPreview from "./TaskPreview";
 
+import { v4 as uuidv4 } from "uuid";
+
 class TaskCreator extends React.Component {
   constructor(props){
     super(props);
@@ -11,18 +13,24 @@ class TaskCreator extends React.Component {
       breakLengthInMinutes: 5,
       numberOfSessions: 4,
       previewBlocks: ["session", "break", "session", "break","session", "break","session"],
+      elapsedTimeInSeconds: 0,
+      isPaused: false,
+      isRunning: false,
     };
   }
   
   handleSubmit = (event)=>{
     event.preventDefault()
-    this.props.onTaskCreation(this.state)
+    this.props.onTaskCreation({...this.state, id: uuidv4()})
     this.setState({
       task: "",
       sessionLengthInMinutes: 25,
       breakLengthInMinutes: 5,
       numberOfSessions: 4,
       previewBlocks: ["session", "break", "session", "break","session", "break","session"],
+      elapsedTimeInSeconds: 0,
+      isPaused: false,
+      isRunning: false,
     })
   }
 

@@ -6,10 +6,13 @@ import TaskManager from "./components/TaskManager";
 import NavBar from "./components/navbar/NavBar";
 import CurrentSession from "./components/CurrentSession";
 
+import { v4 as uuidv4 } from "uuid";
+
 class App extends React.Component {
   state = {
     tasks: [
       {
+        id: uuidv4(),
         task: "Learning React",
         sessionLengthInMinutes: 25,
         breakLengthInMinutes: 5,
@@ -23,8 +26,12 @@ class App extends React.Component {
           "break",
           "session",
         ],
+        elapsedTimeInSeconds: 0,
+        isPaused: false,
+        isRunning: false,
       },
       {
+        id: uuidv4(),
         task: "Learning Agular",
         sessionLengthInMinutes: 25,
         breakLengthInMinutes: 5,
@@ -38,9 +45,13 @@ class App extends React.Component {
           "break",
           "session",
         ],
+        elapsedTimeInSeconds: 0,
+        isPaused: false,
+        isRunning: false,
       },
     ],
     currentSession: {
+      id: uuidv4(),
       task: "Learning Vue",
       sessionLengthInMinutes: 25,
       breakLengthInMinutes: 5,
@@ -54,6 +65,9 @@ class App extends React.Component {
         "break",
         "session",
       ],
+      elapsedTimeInSeconds: 0,
+      isPaused: false,
+      isRunning: false,
     },
     currentSessionState: {},
   };
@@ -83,9 +97,9 @@ class App extends React.Component {
     });
   };
 
-  handleSaveState = (state) =>{
-    this.setState({currentSessionState: state})
-  }
+  handleSaveState = (state) => {
+    this.setState({ currentSession: state });
+  };
 
   render() {
     return (
