@@ -11,6 +11,7 @@ class TaskManager extends React.Component {
 
   render() {
     const { tasks, onTaskPick, onTaskDelete } = this.props;
+
     return (
       <div>
         <h2 className="mb-10 text-center">Task Manager</h2>
@@ -20,7 +21,11 @@ class TaskManager extends React.Component {
               numberOfSessions,
               sessionLengthInMinutes,
               breakLengthInMinutes,
+              elapsedTimeInSeconds,
             } = task;
+            const hours = Math.floor(elapsedTimeInSeconds / 3600);
+            const minutes = Math.floor((elapsedTimeInSeconds % 3600) / 60);
+            const seconds = Math.floor(elapsedTimeInSeconds % 60);
             return (
               <li
                 key={task.id}
@@ -37,12 +42,23 @@ class TaskManager extends React.Component {
                     </p>
                     <p>Sessions: {numberOfSessions}</p>
                     <p>Break length: {breakLengthInMinutes} minutes</p>
+                    <p>Progress: {hours}:{minutes}:{seconds}</p>
                   </div>
 
-                  <button onClick={()=>{onTaskPick(task, index)}} className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6">
+                  <button
+                    onClick={() => {
+                      onTaskPick(task, index);
+                    }}
+                    className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6"
+                  >
                     Start
                   </button>
-                  <button onClick={()=>{onTaskDelete(task, index)}} className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6">
+                  <button
+                    onClick={() => {
+                      onTaskDelete(task, index);
+                    }}
+                    className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6"
+                  >
                     Delete
                   </button>
                 </div>
