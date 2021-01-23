@@ -1,3 +1,5 @@
+import {v4 as uuidv4} from "uuid"
+
 function ProgressBar(props) {
   const {
     task,
@@ -16,6 +18,7 @@ function ProgressBar(props) {
         {previewBlocks.map((block) => {
           return block === "session" ? (
             <div
+              key = {uuidv4()}
               style={{ width: `${sessionBlockWidth}%` }}
               className="flex flex-col"
             >
@@ -24,6 +27,7 @@ function ProgressBar(props) {
             </div>
           ) : (
             <div
+              key = {uuidv4()}
               style={{ width: `${breakBlockWidth}%` }}
               className="flex flex-col"
             >
