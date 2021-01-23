@@ -27,9 +27,12 @@ class TaskManager extends React.Component {
             const totalCycleLengthInSeconds =
               (numberOfSessions * sessionLengthInMinutes +
               breakLengthInMinutes * (numberOfSessions - 1))*60;
-            const hours = getHoursFromSeconds(elapsedTimeInSeconds)
-            const minutes = getMinutesFromSeconds(elapsedTimeInSeconds)
-            const seconds = getRemainingSecondsFromSeconds(elapsedTimeInSeconds)
+
+            
+
+            const elapsedHours = getHoursFromSeconds(elapsedTimeInSeconds)
+            const elapsedMinutes = getMinutesFromSeconds(elapsedTimeInSeconds)
+            const elapsedSeconds = getRemainingSecondsFromSeconds(elapsedTimeInSeconds)
             return (
               <li
                 key={task.id}
@@ -47,9 +50,9 @@ class TaskManager extends React.Component {
                     <p>Sessions: {numberOfSessions}</p>
                     <p>Break length: {breakLengthInMinutes} minutes</p>
                     <p>
-                      Progress: {hours <10 ? "0"+ hours : hours}:
-            {minutes<10 ? "0"+ minutes : minutes}:
-            {seconds<10 ? "0"+ seconds : seconds}
+                      Progress: {elapsedHours <10 ? "0"+ elapsedHours : elapsedHours}:
+            {elapsedMinutes<10 ? "0"+ elapsedMinutes : elapsedMinutes}:
+            {elapsedSeconds<10 ? "0"+ elapsedSeconds : elapsedSeconds}
                     </p>
                   </div>
 
