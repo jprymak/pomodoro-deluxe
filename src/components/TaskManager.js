@@ -1,5 +1,6 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+import {getHoursFromSeconds, getMinutesFromSeconds, getRemainingSecondsFromSeconds} from "../lib/time";
 
 class TaskManager extends React.Component {
   constructor(props) {
@@ -23,9 +24,12 @@ class TaskManager extends React.Component {
               breakLengthInMinutes,
               elapsedTimeInSeconds,
             } = task;
-            const hours = Math.floor(elapsedTimeInSeconds / 3600);
-            const minutes = Math.floor((elapsedTimeInSeconds % 3600) / 60);
-            const seconds = Math.floor(elapsedTimeInSeconds % 60);
+            const totalCycleLengthInSeconds =
+              (numberOfSessions * sessionLengthInMinutes +
+              breakLengthInMinutes * (numberOfSessions - 1))*60;
+            const hours = getHoursFromSeconds(elapsedTimeInSeconds)
+            const minutes = getMinutesFromSeconds(elapsedTimeInSeconds)
+            const seconds = getRemainingSecondsFromSeconds(elapsedTimeInSeconds)
             return (
               <li
                 key={task.id}
@@ -42,7 +46,11 @@ class TaskManager extends React.Component {
                     </p>
                     <p>Sessions: {numberOfSessions}</p>
                     <p>Break length: {breakLengthInMinutes} minutes</p>
-                    <p>Progress: {hours}:{minutes}:{seconds}</p>
+                    <p>
+                      Progress: {hours <10 ? "0"+ hours : hours}:
+            {minutes<10 ? "0"+ minutes : minutes}:
+            {seconds<10 ? "0"+ seconds : seconds}
+                    </p>
                   </div>
 
                   <button

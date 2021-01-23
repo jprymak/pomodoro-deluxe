@@ -2,6 +2,8 @@ import React from "react";
 import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
 
+import {getHoursFromSeconds, getMinutesFromSeconds, getRemainingSecondsFromSeconds} from "../lib/time";
+
 class CurrentSession extends React.Component {
   constructor(props) {
     super(props);
@@ -78,9 +80,10 @@ class CurrentSession extends React.Component {
       (breakLengthInMinutes / totalCycleLengthInMinutes) * 100;
     const totalCycleLengthInSeconds = totalCycleLengthInMinutes * 60;
     const timeLeftInSeconds = totalCycleLengthInSeconds - elapsedTimeInSeconds;
-    const hours = Math.floor(timeLeftInSeconds / 3600);
-    const minutes = Math.floor((timeLeftInSeconds % 3600) / 60);
-    const seconds = Math.floor(timeLeftInSeconds % 60);
+    
+            const hours = getHoursFromSeconds(timeLeftInSeconds)
+            const minutes = getMinutesFromSeconds(timeLeftInSeconds)
+            const seconds = getRemainingSecondsFromSeconds(timeLeftInSeconds)
 
     return (
       <div>
