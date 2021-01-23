@@ -78,7 +78,7 @@ class TaskCreator extends React.Component {
   };
 
   render() {
-    const {onSubmit} = this.props
+    
     return (
       <div className="h-auto w-auto flex flex-col items-center justify-center">
         <TaskCreatorForm

@@ -14,7 +14,7 @@ function ProgressBar(props) {
       <h2 className="mx-auto w-full text-center mb-2">{task}</h2>
       <div className="w-96 border-2 border-solid border-black rounded-md h-3/6 p-1 flex">
         {previewBlocks.map((block) => {
-          return block == "session" ? (
+          return block === "session" ? (
             <div
               style={{ width: `${sessionBlockWidth}%` }}
               className="flex flex-col"
