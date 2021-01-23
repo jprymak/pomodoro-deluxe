@@ -49,6 +49,9 @@ class TaskManager extends React.Component {
             {secondsLeft<10 ? "0"+ secondsLeft : secondsLeft}
                     </p>
                     <p>Sessions: {numberOfSessions}</p>
+                    <p>
+                      Session length: {sessionLengthInMinutes} minutes
+                    </p>
                     <p>Break length: {breakLengthInMinutes} minutes</p>
                     <p>
                       Progress: {elapsedHours <10 ? "0"+ elapsedHours : elapsedHours}:
