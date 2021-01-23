@@ -2,17 +2,10 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import {getHoursFromSeconds, getMinutesFromSeconds, getRemainingSecondsFromSeconds} from "../lib/time";
 
-class TaskManager extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tasks: [],
-    };
-  }
-
-  render() {
-    const { tasks, onTaskPick, onTaskDelete } = this.props;
-
+function TaskManager(props){
+  
+  const { tasks, onTaskPick, onTaskDelete } = props;
+  
     return (
       <div>
         <h2 className="mb-10 text-center">Task Manager</h2>
@@ -84,6 +77,5 @@ class TaskManager extends React.Component {
       </div>
     );
   }
-}
 
 export default TaskManager;
