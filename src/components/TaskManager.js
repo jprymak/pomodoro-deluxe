@@ -28,7 +28,9 @@ class TaskManager extends React.Component {
               (numberOfSessions * sessionLengthInMinutes +
               breakLengthInMinutes * (numberOfSessions - 1))*60;
 
-            
+              const hoursLeft = getHoursFromSeconds(totalCycleLengthInSeconds)
+              const minutesLeft = getMinutesFromSeconds(totalCycleLengthInSeconds)
+              const secondsLeft = getRemainingSecondsFromSeconds(totalCycleLengthInSeconds)
 
             const elapsedHours = getHoursFromSeconds(elapsedTimeInSeconds)
             const elapsedMinutes = getMinutesFromSeconds(elapsedTimeInSeconds)
@@ -42,10 +44,9 @@ class TaskManager extends React.Component {
                 <div className="flex justify-between">
                   <div>
                     <p>
-                      Total time:{" "}
-                      {numberOfSessions * sessionLengthInMinutes +
-                        breakLengthInMinutes * (numberOfSessions - 1)}{" "}
-                      minutes
+                      Total time: {hoursLeft <10 ? "0"+ hoursLeft : hoursLeft}:
+            {minutesLeft<10 ? "0"+ minutesLeft : minutesLeft}:
+            {secondsLeft<10 ? "0"+ secondsLeft : secondsLeft}
                     </p>
                     <p>Sessions: {numberOfSessions}</p>
                     <p>Break length: {breakLengthInMinutes} minutes</p>
