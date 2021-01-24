@@ -9,6 +9,14 @@ class CurrentSession extends React.Component {
     super(props);
     this.state = this.props.currentSession
     this.intervalID = null;
+    const {
+      sessionLengthInMinutes,
+      numberOfSessions,
+      breakLengthInMinutes,
+    } = this.props.currentSession;
+    this.totalCycleLengthInSeconds =
+      (numberOfSessions * sessionLengthInMinutes +
+      breakLengthInMinutes * (numberOfSessions - 1))*60;
   }
 
   startTimer = () => {
@@ -25,6 +33,13 @@ class CurrentSession extends React.Component {
         if (this.state.isRunning === true && !this.state.isPaused) {
           this.startTimer();
         }
+  }
+
+  componentDidUpdate(){
+    console.log(this.totalCycleLengthInSeconds)
+    if(this.state.elapsedTimeInSeconds>=this.totalCycleLengthInSeconds){
+      this.stopTimer()
+    }
   }
 
   componentWillUnmount() {
