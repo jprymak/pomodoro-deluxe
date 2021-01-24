@@ -97,6 +97,8 @@ class CurrentSession extends React.Component {
           breakBlockWidth={breakBlockWidth}
           previewBlocks={previewBlocks}
           task={task}
+          totalCycleLengthInSeconds={totalCycleLengthInSeconds}
+          timeLeftInSeconds={timeLeftInSeconds}
         />
         <div className="flex justify-around">
           <button
