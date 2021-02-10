@@ -1,7 +1,6 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
-import Sound from "react-sound";
 import breakEndsAlarmSfx from "../sounds/316837__lalks__alarm-02-short.wav";
 import sessionEndsAlarmSfx from "../sounds/320492__lacezio__clock-chime.wav";
 
