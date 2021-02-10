@@ -1,14 +1,22 @@
 import React from "react";
 import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
+import Sound from "react-sound";
+import breakEndsAlarmSfx from "../sounds/316837__lalks__alarm-02-short.wav";
+import sessionEndsAlarmSfx from "../sounds/320492__lacezio__clock-chime.wav";
 
-import {getHoursFromSeconds, getMinutesFromSeconds, getRemainingSecondsFromSeconds} from "../lib/time";
+import {
+  getHoursFromSeconds,
+  getMinutesFromSeconds,
+  getRemainingSecondsFromSeconds,
+} from "../lib/time";
 
 class CurrentSession extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.props.currentSession
+    this.state = this.props.currentSession;
     this.intervalID = null;
+
     const {
       sessionLengthInMinutes,
       numberOfSessions,
@@ -16,29 +24,39 @@ class CurrentSession extends React.Component {
     } = this.props.currentSession;
     this.totalCycleLengthInSeconds =
       (numberOfSessions * sessionLengthInMinutes +
-      breakLengthInMinutes * (numberOfSessions - 1))*60;
+        breakLengthInMinutes * (numberOfSessions - 1)) *
+      60;
+    this.audioRef = React.createRef();
   }
 
   startTimer = () => {
     if (this.intervalID === null) {
       this.intervalID = window.setInterval(() => {
-        this.setState((prevState) => {
-          const elapsedTimeInSeconds = prevState.elapsedTimeInSeconds + 1;
-          return { elapsedTimeInSeconds };
-        });
+        this.setState(
+          (prevState) => {
+            const elapsedTimeInSeconds = prevState.elapsedTimeInSeconds + 1;
+
+            return { elapsedTimeInSeconds };
+          },
+          () => {
+            this.checkIfAlarmIsToBeSetOff();
+          }
+        );
       }, 1000);
     }
   };
   componentDidMount() {
-        if (this.state.isRunning === true && !this.state.isPaused) {
-          this.startTimer();
-        }
+    this.setState({
+      nextTimeStamp: this.state.alarmTimeStamps[this.state.nextTimeStampIndex],
+    });
+    if (this.state.isRunning === true && !this.state.isPaused) {
+      this.startTimer();
+    }
   }
 
-  componentDidUpdate(){
-    console.log(this.totalCycleLengthInSeconds)
-    if(this.state.elapsedTimeInSeconds>=this.totalCycleLengthInSeconds){
-      this.stopTimer()
+  componentDidUpdate() {
+    if (this.state.elapsedTimeInSeconds >= this.totalCycleLengthInSeconds) {
+      this.stopTimer();
     }
   }
 
@@ -48,6 +66,46 @@ class CurrentSession extends React.Component {
     }
     this.props.saveState(this.state);
   }
+
+  checkIfAlarmIsToBeSetOff() {
+    const conditions = [
+      this.state.elapsedTimeInSeconds >= this.state.nextTimeStamp.timeStamp,
+      this.state.elapsedTimeInSeconds < this.state.nextTimeStamp.timeStamp + 5,
+    ];
+    if (conditions.every((condition) => condition === true)) {
+      this.setState({ isPlaying: true });
+    } else {
+      this.setState({ isPlaying: false });
+    }
+    if (
+      this.state.elapsedTimeInSeconds >=
+      this.state.nextTimeStamp.timeStamp + 5
+    ) {
+      this.setNextTimeStampIndex();
+    }
+  }
+
+  setNextTimeStampIndex = () => {
+    this.setState(
+      (prevState) => {
+        const nextTimeStampIndex = prevState.nextTimeStampIndex + 1;
+        return { nextTimeStampIndex };
+      },
+      () => {
+        this.setNextTimeStamp();
+      }
+    );
+  };
+
+  setNextTimeStamp = () => {
+    this.setState({
+      nextTimeStamp: this.state.alarmTimeStamps[this.state.nextTimeStampIndex],
+    });
+  };
+
+  resetTimeStamp = () => {
+    this.setState({ nextTimeStamp: this.state.alarmTimeStamps[0] });
+  };
 
   handleStart = () => {
     this.setState({ isRunning: true });
@@ -62,6 +120,7 @@ class CurrentSession extends React.Component {
   handleStop = () => {
     this.stopTimer();
     this.setState({ elapsedTimeInSeconds: 0, isRunning: false });
+    this.resetTimeStamp();
   };
 
   togglePause = () => {
@@ -76,8 +135,29 @@ class CurrentSession extends React.Component {
     });
   };
 
+  playAlarm = (elapsedTimeInSeconds, totalCycleLengthInSeconds) => {
+    if (this.state.isPlaying) {
+      let audioSrc = null;
+      if (this.state.nextTimeStamp.status === "sessionEnded") {
+        audioSrc = sessionEndsAlarmSfx;
+      } else {
+        audioSrc = breakEndsAlarmSfx;
+      }
+      return (
+        <audio
+          ref={this.audioRef}
+          src={audioSrc}
+          autoPlay
+          loop={
+            elapsedTimeInSeconds < totalCycleLengthInSeconds ? true : false
+          }
+        ></audio>
+      );
+    }
+  };
+
   render() {
-    const { elapsedTimeInSeconds, isRunning, isPaused } = this.state;
+    const { elapsedTimeInSeconds, isRunning, isPaused, isPlaying } = this.state;
     const {
       sessionLengthInMinutes,
       numberOfSessions,
@@ -95,17 +175,19 @@ class CurrentSession extends React.Component {
       (breakLengthInMinutes / totalCycleLengthInMinutes) * 100;
     const totalCycleLengthInSeconds = totalCycleLengthInMinutes * 60;
     const timeLeftInSeconds = totalCycleLengthInSeconds - elapsedTimeInSeconds;
-    
-            const hours = getHoursFromSeconds(timeLeftInSeconds)
-            const minutes = getMinutesFromSeconds(timeLeftInSeconds)
-            const seconds = getRemainingSecondsFromSeconds(timeLeftInSeconds)
+
+    const hours = getHoursFromSeconds(timeLeftInSeconds);
+    const minutes = getMinutesFromSeconds(timeLeftInSeconds);
+    const seconds = getRemainingSecondsFromSeconds(timeLeftInSeconds);
 
     return (
       <div>
         <div>Current Session</div>
+        {isPlaying ? this.playAlarm(elapsedTimeInSeconds, totalCycleLengthInSeconds ) : null}
+
         <Timer hours={hours} minutes={minutes} seconds={seconds} />
         <ProgressBar
-        isPaused = {isPaused}
+          isPaused={isPaused}
           sessionLengthInMinutes={sessionLengthInMinutes}
           breakLengthInMinutes={breakLengthInMinutes}
           sessionBlockWidth={sessionBlockWidth}

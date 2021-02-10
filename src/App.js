@@ -29,6 +29,18 @@ class App extends React.Component {
         elapsedTimeInSeconds: 0,
         isPaused: false,
         isRunning: false,
+        alarmTimeStamps: [{timeStamp: 1500, status: "sessionEnded"},
+       {timeStamp: 1800, status: "breakEnded"},
+       {timeStamp: 3300, status: "sessionEnded"},
+       {timeStamp: 3600, status: "breakEnded"},
+       {timeStamp: 5100, status: "sessionEnded"},
+       {timeStamp: 5400, status: "breakEnded"},
+       {timeStamp: 6900, status: "sessionEnded"}
+    
+    ],
+      nextTimeStampIndex: 0,
+      nextTimeStamp: "",
+      isPlaying: false
       },
       {
         id: uuidv4(),
@@ -48,6 +60,18 @@ class App extends React.Component {
         elapsedTimeInSeconds: 0,
         isPaused: false,
         isRunning: false,
+        alarmTimeStamps: [{timeStamp: 1500, status: "sessionEnded"},
+       {timeStamp: 1800, status: "breakEnded"},
+       {timeStamp: 3300, status: "sessionEnded"},
+       {timeStamp: 3600, status: "breakEnded"},
+       {timeStamp: 5100, status: "sessionEnded"},
+       {timeStamp: 5400, status: "breakEnded"},
+       {timeStamp: 6900, status: "sessionEnded"}
+    
+    ],
+      nextTimeStampIndex: 0,
+      nextTimeStamp: "",
+      isPlaying: false
       },
     ],
     currentSession: {
@@ -68,6 +92,18 @@ class App extends React.Component {
       elapsedTimeInSeconds: 0,
       isPaused: false,
       isRunning: false,
+      alarmTimeStamps: [{timeStamp: 1500, status: "sessionEnded"},
+       {timeStamp: 1800, status: "breakEnded"},
+       {timeStamp: 3300, status: "sessionEnded"},
+       {timeStamp: 3600, status: "breakEnded"},
+       {timeStamp: 5100, status: "sessionEnded"},
+       {timeStamp: 5400, status: "breakEnded"},
+       {timeStamp: 6900, status: "sessionEnded"}
+    
+    ],
+      nextTimeStampIndex: 0,
+      nextTimeStamp: "",
+      isPlaying: false
     },
     currentSessionState: {},
   };

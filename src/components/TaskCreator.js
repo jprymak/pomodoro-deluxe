@@ -16,12 +16,15 @@ class TaskCreator extends React.Component {
       elapsedTimeInSeconds: 0,
       isPaused: false,
       isRunning: false,
+      nextTimeStampIndex: 0,
+      nextTimeStamp: "",
+      isPlaying: false
     };
   }
   
   handleSubmit = (event)=>{
     event.preventDefault()
-    this.props.onTaskCreation({...this.state, id: uuidv4()})
+    this.props.onTaskCreation({...this.state, id: uuidv4(), alarmTimeStamps: this.createAlarmTimeStamps()})
     this.setState({
       task: "",
       sessionLengthInMinutes: 25,
@@ -57,6 +60,29 @@ class TaskCreator extends React.Component {
       this.createPreviewBlocks();
     });
   };
+
+  createAlarmTimeStamps = () =>{
+
+    const alarmTimeStamps = [];
+    let lastTimeStamp = 0;
+    for (let i = 1; i <= this.state.numberOfSessions; i++) {
+      
+      if (i < this.state.numberOfSessions) {
+        lastTimeStamp = lastTimeStamp + this.state.sessionLengthInMinutes*60
+        alarmTimeStamps.push({timeStamp: lastTimeStamp, status: "sessionEnded"});
+        lastTimeStamp = lastTimeStamp + this.state.breakLengthInMinutes*60
+        alarmTimeStamps.push({timeStamp: lastTimeStamp, status: "breakEnded"});
+      } else{
+        lastTimeStamp = lastTimeStamp + this.state.sessionLengthInMinutes*60
+        alarmTimeStamps.push({timeStamp: lastTimeStamp, status: "sessionEnded"});
+      }
+    }
+    return alarmTimeStamps
+  }
+
+  setFirstTimeStamp = () =>{
+    
+  }
 
   createPreviewBlocks = () => {
     this.setState(
