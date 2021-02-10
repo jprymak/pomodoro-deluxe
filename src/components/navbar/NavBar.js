@@ -13,6 +13,9 @@ function NavBar() {
         <li>
           <Link to="/task-manager">Task Manager</Link>
         </li>
+        <li>
+          <Link to="/history">History</Link>
+        </li>
       </ul>
     </nav>
   );

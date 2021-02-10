@@ -5,6 +5,7 @@ import TaskCreator from "./components/TaskCreator";
 import TaskManager from "./components/TaskManager";
 import NavBar from "./components/navbar/NavBar";
 import CurrentSession from "./components/CurrentSession";
+import History from "./components/History"
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -159,6 +160,10 @@ class App extends React.Component {
                 onTaskPick={this.handleTaskPick}
                 onTaskDelete = {this.handleTaskDelete}
                 tasks={this.state.tasks}
+              />
+            </Route>
+            <Route path="/history">
+              <History
               />
             </Route>
             <Route path="/">
