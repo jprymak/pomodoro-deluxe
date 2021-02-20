@@ -163,7 +163,7 @@ class App extends React.Component {
               />
             </Route>
             <Route path="/history">
-              <History
+              <History tasks={this.state.tasks}
               />
             </Route>
             <Route path="/">
