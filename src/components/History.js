@@ -4,7 +4,7 @@ import {
   getMinutesFromSeconds,
   getRemainingSecondsFromSeconds,
 } from "../lib/time";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink} from "react-csv";
 
 class History extends React.Component {
   constructor(props) {
