@@ -18,7 +18,8 @@ class TaskCreator extends React.Component {
       isRunning: false,
       nextTimeStampIndex: 0,
       nextTimeStamp: "",
-      isPlaying: false
+      isPlaying: false,
+      totalTimeSpentInSeconds: 0,
     };
   }
   
@@ -34,6 +35,10 @@ class TaskCreator extends React.Component {
       elapsedTimeInSeconds: 0,
       isPaused: false,
       isRunning: false,
+      nextTimeStampIndex: 0,
+      nextTimeStamp: "",
+      isPlaying: false,
+      totalTimeSpentInSeconds: 0,
     })
   }
 
