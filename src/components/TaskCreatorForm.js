@@ -22,6 +22,7 @@ function TaskCreatorForm({
             onChange={onTaskNameChange}
             className="outline-black ml-3 px-1"
             type="text"
+            required="required"
           />
         </label>
         <label htmlFor="" className="my-1 w-full flex justify-between">
@@ -31,6 +32,7 @@ function TaskCreatorForm({
             onChange={onSessionLengthInMinutesChange}
             className="outline-black ml-3 px-1"
             type="number"
+            min="1"
           />
         </label>
         <label htmlFor="" className="my-1 w-full flex justify-between">
@@ -40,6 +42,7 @@ function TaskCreatorForm({
             onChange={onBreakLengthInMinutesChange}
             className="outline-black ml-3 px-1"
             type="number"
+            min="1"
           />
         </label>
         <label htmlFor="" className="my-1 w-full flex justify-between">
@@ -49,6 +52,7 @@ function TaskCreatorForm({
             onChange={onNumberOfSessionsChange}
             className="outline-black ml-3 px-1"
             type="number"
+            min="1"
           />
         </label>
         <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4">
