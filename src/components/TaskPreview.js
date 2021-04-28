@@ -12,27 +12,31 @@ function TaskPreview({ formValue }) {
   const sessionBlockWidth = sessionLengthInMinutes/totalCycleLengthInMinutes*100;
   const breakBlockWidth = breakLengthInMinutes/totalCycleLengthInMinutes*100;
   return (
-    <div className="h-40 w-full">
-      <h2 className="mx-auto w-full text-center mb-2">Preview</h2>
-      <h2 className="mx-auto w-full text-center mb-2">{task}</h2>
-      <div className="w-full border-2 border-solid border-black rounded-md h-3/6 p-1 flex">
+    <React.Fragment>
+    <h2 className="progress-bar__task-name">Preview</h2>
+    <div className="progress-bar">
+      <h2 className="progress-bar__task-name">{task}</h2>
+      <div className="progress-bar__bar">
+      <div className="session-blocks">
         {previewBlocks.map((block) => {
           return block === "session" ? (
-            <div key={uuidv4()} style={{width: `${sessionBlockWidth}%` }} className="flex flex-col" >
-              <p className="w-full text-center">{sessionLengthInMinutes}</p>
-                <div className="h-full bg-red-400" ></div>
+            <div key={uuidv4()} style={{width: `${sessionBlockWidth}%` }} className="session-block session-block--session" >
+              <p className="session-block__length session-block__length--black">{sessionLengthInMinutes}</p>
+                
             </div>
             
           ) : (
-            <div key={uuidv4()} style={{width: `${breakBlockWidth}%` }} className="flex flex-col"  >
-              <p className="w-full text-center">{breakLengthInMinutes}</p>
-              <div  className="h-full bg-black" ></div>
+            <div key={uuidv4()} style={{width: `${breakBlockWidth}%` }} className="session-block session-block--break" >
+              <p className="session-block__length session-block__length--white">{breakLengthInMinutes}</p>
+              
             </div>
             
           );
         })}
       </div>
+      </div>
     </div>
+    </React.Fragment>
   );
 }
 
