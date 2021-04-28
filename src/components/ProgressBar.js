@@ -9,20 +9,15 @@ function ProgressBar(props) {
     sessionBlockWidth,
     breakBlockWidth,
     isPaused,
-    totalCycleLengthInSeconds,
-    timeLeftInSeconds,
+    currentWidth,
   } = props;
-
-  const currentWidth =
-    (totalCycleLengthInSeconds - timeLeftInSeconds) /
-      totalCycleLengthInSeconds * 100
 
   return (
     <div className={`progress-bar ${isPaused ? "progress-bar--disabled" : ""}`}>
       <h2 className="progress-bar__task-name">{task}</h2>
       <div className="progress-bar__bar">
         <div
-          style={{width: `${currentWidth}%` }}
+          style={{width: `${currentWidth || 0}%` }}
           className="progress-bar__progress"
         ></div>
         <div className="session-blocks">
