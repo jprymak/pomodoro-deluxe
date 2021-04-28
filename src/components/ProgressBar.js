@@ -13,40 +13,41 @@ function ProgressBar(props) {
     timeLeftInSeconds,
   } = props;
 
-  const maxWidth = 372;
+  const maxWidth = 100;
   const currentWidth =
     (totalCycleLengthInSeconds - timeLeftInSeconds) /
       totalCycleLengthInSeconds * maxWidth
 
   return (
-    <div className={`h-40 w-full ${isPaused ? "opacity-40" : ""}`}>
-      <h2 className="mx-auto w-full text-center mb-2">{task}</h2>
-      <div className="relative w-96 border-2 border-solid border-black rounded-md h-3/6 p-1 flex">
+    <div className={`progress-bar ${isPaused ? "progress-bar--disabled" : ""}`}>
+      <h2 className="progress-bar__task-name">{task}</h2>
+      <div className="progress-bar__bar">
         <div
-          style={{ height: "44px", width: `${currentWidth}px` }}
-          className="bg-yellow-400 absolute top-7"
+          style={{width: `${currentWidth}%` }}
+          className="progress-bar__progress"
         ></div>
+        <div className="session-blocks">
         {previewBlocks.map((block) => {
           return block === "session" ? (
             <div
               key={uuidv4()}
               style={{ width: `${sessionBlockWidth}%` }}
-              className="flex flex-col"
+              className="session-block session-block--session"
             >
-              <p className="w-full text-center">{sessionLengthInMinutes}</p>
-              <div className="h-full bg-red-400"></div>
+              <p className="session-block__length session-block__length--black">{sessionLengthInMinutes}</p>
             </div>
           ) : (
             <div
               key={uuidv4()}
               style={{ width: `${breakBlockWidth}%` }}
-              className="flex flex-col"
+              className="session-block session-block--break"
             >
-              <p className="w-full text-center">{breakLengthInMinutes}</p>
-              <div className="h-full bg-black"></div>
+              <p className="session-block__length session-block__length--white">{breakLengthInMinutes}</p>
             </div>
           );
         })}
+        </div>
+        
       </div>
     </div>
   );

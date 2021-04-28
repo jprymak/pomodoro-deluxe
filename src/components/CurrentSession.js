@@ -180,8 +180,8 @@ class CurrentSession extends React.Component {
     const seconds = getRemainingSecondsFromSeconds(timeLeftInSeconds);
 
     return (
-      <div>
-        <div>Current Session</div>
+      <div className="current-session">
+        <div className="current-session__heading">Current Session</div>
         {isPlaying ? this.playAlarm(elapsedTimeInSeconds, totalCycleLengthInSeconds ) : null}
 
         <Timer hours={hours} minutes={minutes} seconds={seconds} />
@@ -196,7 +196,7 @@ class CurrentSession extends React.Component {
           totalCycleLengthInSeconds={totalCycleLengthInSeconds}
           timeLeftInSeconds={timeLeftInSeconds}
         />
-        <div className="flex justify-around">
+        <div className="current-session__buttons">
           <button
             disabled={isRunning}
             onClick={this.handleStart}
