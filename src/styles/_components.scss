@@ -83,3 +83,20 @@
         justify-content: space-between;
     }
 }
+
+
+.button{
+    font-size: 1.6rem;
+    padding: 2rem;
+    text-align: center;
+    border: none;
+    background: rgb(236, 218, 53);
+    border-radius: 100px;
+    width: 10rem;
+    cursor: pointer;
+    &--disabled{
+        cursor: default;
+        opacity: 0.8;
+    }
+}
+

@@ -3,6 +3,7 @@ import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
 import breakEndsAlarmSfx from "../sounds/316837__lalks__alarm-02-short.wav";
 import sessionEndsAlarmSfx from "../sounds/320492__lacezio__clock-chime.wav";
+import Button from "./Button";
 
 import {
   getHoursFromSeconds,
@@ -202,33 +203,9 @@ class CurrentSession extends React.Component {
           currentWidth={currentWidth}
         />
         <div className="current-session__buttons">
-          <button
-            disabled={isRunning}
-            onClick={this.handleStart}
-            className={`p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20 ${
-              isRunning ? "opacity-40 cursor-default" : ""
-            }`}
-          >
-            Start
-          </button>
-          <button
-            disabled={!isRunning}
-            onClick={this.handleStop}
-            className={`p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20 ${
-              isRunning ? "" : "opacity-40 cursor-default"
-            }`}
-          >
-            Stop
-          </button>
-          <button
-            disabled={!isRunning}
-            onClick={this.togglePause}
-            className={`p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20 ${
-              isRunning ? "" : "opacity-40 cursor-default"
-            }`}
-          >
-            {isPaused ? "Resume" : "Pause"}
-          </button>
+          <Button role='Start' isRunning={isRunning} onClick={this.handleStart} />
+          <Button role='Stop' isRunning={isRunning} onClick={this.handleStop} />
+          <Button role='Pause/Resume' isRunning={isRunning} isPaused={isPaused} onClick={this.togglePause} />
         </div>
       </div>
     );
