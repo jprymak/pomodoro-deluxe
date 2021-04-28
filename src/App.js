@@ -148,7 +148,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App h-screen flex  items-center flex-col">
+      <div className="App">
         <Router>
           <NavBar />
           <Switch>

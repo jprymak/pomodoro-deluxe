@@ -1,1 +1,16 @@
 @import "styles/base";
+@import "styles/components";
+
+
+.App{
+    width: 80%;
+    margin: 10rem auto 0 auto;
+    height: 85vh;
+    background-color: rgb(255, 155, 61);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 2rem 5rem rgba( #000000, .4);
+}
