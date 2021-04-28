@@ -179,6 +179,10 @@ class CurrentSession extends React.Component {
     const minutes = getMinutesFromSeconds(timeLeftInSeconds);
     const seconds = getRemainingSecondsFromSeconds(timeLeftInSeconds);
 
+    const currentWidth =
+    (totalCycleLengthInSeconds - timeLeftInSeconds) /
+      totalCycleLengthInSeconds * 100
+
     return (
       <div className="current-session">
         <div className="current-session__heading">Current Session</div>
@@ -195,6 +199,7 @@ class CurrentSession extends React.Component {
           task={task}
           totalCycleLengthInSeconds={totalCycleLengthInSeconds}
           timeLeftInSeconds={timeLeftInSeconds}
+          currentWidth={currentWidth}
         />
         <div className="current-session__buttons">
           <button
