@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
-    <nav className="w-full bg-red-400 mb-20">
-      <ul className="flex justify-around">
+    <nav className="navbar">
+      <ul className="navbar__list">
         <li>
           <Link to="/">Current Session</Link>
         </li>
