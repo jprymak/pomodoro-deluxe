@@ -1,5 +1,8 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+
+import ProgressBar from "./ProgressBar";
+
 function TaskPreview({ formValue }) {
   const {
     task,
@@ -14,28 +17,14 @@ function TaskPreview({ formValue }) {
   return (
     <React.Fragment>
     <h2 className="progress-bar__task-name">Preview</h2>
-    <div className="progress-bar">
-      <h2 className="progress-bar__task-name">{task}</h2>
-      <div className="progress-bar__bar">
-      <div className="session-blocks">
-        {previewBlocks.map((block) => {
-          return block === "session" ? (
-            <div key={uuidv4()} style={{width: `${sessionBlockWidth}%` }} className="session-block session-block--session" >
-              <p className="session-block__length session-block__length--black">{sessionLengthInMinutes}</p>
-                
-            </div>
-            
-          ) : (
-            <div key={uuidv4()} style={{width: `${breakBlockWidth}%` }} className="session-block session-block--break" >
-              <p className="session-block__length session-block__length--white">{breakLengthInMinutes}</p>
-              
-            </div>
-            
-          );
-        })}
-      </div>
-      </div>
-    </div>
+    <ProgressBar
+    task={task}
+    sessionLengthInMinutes={sessionLengthInMinutes}
+    breakLengthInMinutes={breakLengthInMinutes}
+    previewBlocks={previewBlocks}
+    sessionBlockWidth={sessionBlockWidth}
+    breakBlockWidth={breakBlockWidth}
+    />
     </React.Fragment>
   );
 }
