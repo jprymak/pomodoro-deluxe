@@ -13,10 +13,9 @@ function ProgressBar(props) {
     timeLeftInSeconds,
   } = props;
 
-  const maxWidth = 100;
   const currentWidth =
     (totalCycleLengthInSeconds - timeLeftInSeconds) /
-      totalCycleLengthInSeconds * maxWidth
+      totalCycleLengthInSeconds * 100
 
   return (
     <div className={`progress-bar ${isPaused ? "progress-bar--disabled" : ""}`}>
