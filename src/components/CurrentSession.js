@@ -120,6 +120,7 @@ class CurrentSession extends React.Component {
   handleStop = () => {
     this.stopTimer();
     this.setState({ elapsedTimeInSeconds: 0, isRunning: false });
+    this.setState({ isPaused: false });
     this.resetTimeStamp();
   };
 
