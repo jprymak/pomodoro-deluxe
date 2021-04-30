@@ -10,52 +10,56 @@ function TaskCreatorForm({
   onNumberOfSessionsChange,
 }) {
   return (
-    <div className="mx-auto flex items-center justify-center mb-6 ">
+    <div className="form-container">
       <form
         onSubmit={onSubmit}
-        className="w-auto min-w-min flex flex-col items-start justify-start p-2 border-2 border-solid border-black rounded-md"
+        className="form"
       >
-        <label htmlFor="" className="my-1 w-full flex justify-between w-96">
+        <label for="task-name" className="form__label">
           What are you doing?
-          <input
+        </label>
+        <input
+            id="task-name"
             value={task}
             onChange={onTaskNameChange}
-            className="outline-black ml-3 px-1"
+            className="form__input"
             type="text"
             required="required"
           />
-        </label>
-        <label htmlFor="" className="my-1 w-full flex justify-between">
+        <label for="session-length" className="form__label">
           Set session length in minutes
-          <input
+        </label>
+        <input
+            id="session-length"
             value={sessionLengthInMinutes}
             onChange={onSessionLengthInMinutesChange}
-            className="outline-black ml-3 px-1"
+            className="form__input"
             type="number"
             min="1"
           />
-        </label>
-        <label htmlFor="" className="my-1 w-full flex justify-between">
+        <label for="break-length" className="form__label">
           Set break length in minutes
-          <input
+        </label>
+        <input
+            id="break-length"
             value={breakLengthInMinutes}
             onChange={onBreakLengthInMinutesChange}
-            className="outline-black ml-3 px-1"
+            className="form__input"
             type="number"
             min="1"
           />
-        </label>
-        <label htmlFor="" className="my-1 w-full flex justify-between">
+        <label forr="sessions-count" className="form__label">
           Number of sessions
-          <input
+        </label>
+        <input
+            id="sessions-count"
             value={numberOfSessions}
             onChange={onNumberOfSessionsChange}
-            className="outline-black ml-3 px-1"
+            className="form__input"
             type="number"
             min="1"
           />
-        </label>
-        <button className="p-1 self-center border-solid border-2 border-black rounded-md mt-4">
+        <button className="button">
           Accept
         </button>
       </form>
