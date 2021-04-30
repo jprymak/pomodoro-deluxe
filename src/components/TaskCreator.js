@@ -111,7 +111,8 @@ class TaskCreator extends React.Component {
   render() {
     
     return (
-      <div className="h-auto w-auto flex flex-col items-center justify-center">
+      <div className="task-creator">
+        <h1 className="task-creator__heading">TASK CREATOR</h1>
         <TaskCreatorForm
           task={this.state.task}
           sessionLengthInMinutes={this.state.sessionLengthInMinutes}
