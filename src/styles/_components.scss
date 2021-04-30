@@ -95,13 +95,13 @@
 
 .button{
     font-size: 1.6rem;
-    padding: 2rem;
-    text-align: center;
+    padding: 1.6rem;
     border: none;
     background: rgb(236, 218, 53);
     border-radius: 100px;
     width: 10rem;
     cursor: pointer;
+    box-shadow: 0.5rem 0.5rem 4rem rgba(#000, 0.4);
     transition: all .2s ease-out;
     &--disabled{
         cursor: default;
