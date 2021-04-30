@@ -12,7 +12,8 @@
     border-radius: 4px;
     display: grid;
     grid-template-rows: min-content 1fr;
+    grid-template-columns: 1fr;
     align-items: center;
-    justify-content: center;
+    justify-items: center;
     box-shadow: 0 2rem 5rem rgba( #000000, .4);
 }
