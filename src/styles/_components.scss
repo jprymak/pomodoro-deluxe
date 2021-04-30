@@ -141,6 +141,9 @@
     }
     &__input{
         grid-column: 2/3;
+        &:last-of-type{
+            margin-bottom: 2rem;;
+        }
     }
 
     & button{
