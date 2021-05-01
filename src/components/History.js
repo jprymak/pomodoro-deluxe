@@ -3,7 +3,9 @@ import {
   getHoursFromSeconds,
   getMinutesFromSeconds,
   getRemainingSecondsFromSeconds,
+  concatenateTimeSegments
 } from "../lib/time";
+
 import { CSVLink} from "react-csv";
 
 class History extends React.Component {
@@ -43,9 +45,7 @@ class History extends React.Component {
             return (
               <li>
                 {task.task} - Total time spent on this task:{" "}
-                {elapsedHours < 10 ? "0" + elapsedHours : elapsedHours}:
-                {elapsedMinutes < 10 ? "0" + elapsedMinutes : elapsedMinutes}:
-                {elapsedSeconds < 10 ? "0" + elapsedSeconds : elapsedSeconds}
+                {concatenateTimeSegments(elapsedHours,elapsedMinutes,elapsedSeconds)}
               </li>
             );
           })}
