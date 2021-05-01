@@ -1,17 +1,26 @@
 .navbar{
     width: 100%;
-    margin: 6rem 0;
-    
+    padding: 4rem 0 10rem 0;
+    background-color: rgb(255, 155, 61);
+    clip-path: polygon(0 0, 100% 0, 100% 60%, 25% 60%, 0 100%);
+    display: flex;
+    align-items: center;
     &__list{
         list-style: none;
         font-size: 1.6rem;
         display: flex;
-        justify-content: space-around;
-
+        margin-right: 2rem;
         li a{
             color: #000;
             text-decoration: none;
+            padding: 2rem;
         }
+    }
+    &__icon{
+        margin: 0 3rem;
+        width:8rem;
+        height: 8rem;
+        margin-right: auto;
     }
 }
 

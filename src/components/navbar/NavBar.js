@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { ReactComponent as Tomato } from '../../assets/tomato-svgrepo-com.svg';
 
 function NavBar() {
   return (
     <nav className="navbar">
+      <Tomato className="navbar__icon"/>
       <ul className="navbar__list">
         <li>
           <Link to="/">Current Session</Link>
