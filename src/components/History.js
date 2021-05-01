@@ -6,7 +6,7 @@ import {
   concatenateTimeSegments
 } from "../lib/time";
 
-import { CSVLink} from "react-csv";
+import { CSVLink } from "react-csv";
 
 class History extends React.Component {
   constructor(props) {
@@ -33,7 +33,14 @@ class History extends React.Component {
     return (
       <div className="history">
         <h1 className="history__header">History</h1>
-        <ul>
+        <table className="history__table">
+          <thead className="history__thead">
+            <tr className="history__tr">
+              <th className="history__th">Task</th>
+              <th className="history__th">Total time spent</th>
+            </tr>
+          </thead>
+          <tbody className="history__tbody">
           {tasks.map((task) => {
             const elapsedHours = getHoursFromSeconds(task.elapsedTimeInSeconds);
             const elapsedMinutes = getMinutesFromSeconds(
@@ -43,17 +50,19 @@ class History extends React.Component {
               task.elapsedTimeInSeconds
             );
             return (
-              <li>
-                {task.task} - Total time spent on this task:{" "}
-                {concatenateTimeSegments(elapsedHours,elapsedMinutes,elapsedSeconds)}
-              </li>
+              <tr className="history__tr">
+                <td className="history__td">{task.task}</td>
+                <td className="history__td">{concatenateTimeSegments(elapsedHours, elapsedMinutes, elapsedSeconds)}</td>
+              </tr>
             );
           })}
-        </ul>
+          </tbody>
+          
+        </table>
         <CSVLink
           data={this.csvData}
           filename={"my-file.csv"}
-          headers ={["task name", "total time spent"]}
+          headers={["task name", "total time spent"]}
           className={`button history__button`}
         >
           Generate CSV report
