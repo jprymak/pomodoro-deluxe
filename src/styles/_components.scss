@@ -101,7 +101,7 @@
     border-radius: 100px;
     width: 10rem;
     cursor: pointer;
-    box-shadow: 0.5rem 0.5rem 4rem rgba(#000, 0.4);
+    box-shadow: 0.5rem 0.5rem 1rem rgba(#000, 0.4);
     transition: all .2s ease-out;
     &--disabled{
         cursor: default;
@@ -109,7 +109,15 @@
         filter: blur(1px);
         transform: scale(0.9);
     }
+    &--small{
+        line-height: 1.2rem;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        padding: 1.2rem;
+        width: 8rem;
+    }
 }
+
 
 .timer{
     font-size: 2rem;
@@ -152,9 +160,76 @@
     }
 }
 
+.task-manager,
 .task-creator{
     &__heading{
         @include segmentHeading;
     }
+}
+
+.task-manager{
+    width: auto;
+    &__list{
+        list-style: none;
+    }
+    &:hover .task-card:not(:hover){
+        transform: scale(.9);
+        filter: blur(1px);
+    }
+    
+}
+
+.task-card{
+    // border: 1px solid black;
+    border-radius: 3px;
+    margin-bottom: 2rem;
+    padding: .8rem;
+    display: grid;
+    grid-template-columns: 1fr minmax(30%, min-content);
+    grid-column-gap: 3rem;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0.5rem 0.5rem 4rem rgba(#000, 0.4);
+    transition: transform .4s;
+    &__heading{
+        grid-column: 1/2;
+        font-size: 1.6rem;
+        line-height: 2.6rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid rgb(128, 114, 114);
+    }
+    &__info-container{
+        font-size: 1.2rem;
+        grid-column: 1/2;
+        display: flex;
+        justify-content: space-between; 
+    }
+    &__info{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-weight: 800;
+        &:not(:last-of-type){
+            margin-right: 1rem;
+        }
+        & span{
+            font-weight: 400;
+        }
+    }
+    &__buttons{
+        grid-row: 1/3;
+        grid-column: 2/3;
+        display: flex;
+        justify-content: space-between; 
+
+        & button{
+            margin-right: 1rem;
+        }
+    }
+    &:hover{
+        transform: translate(10px, -10px) scale(1.2)
+    }
+    
 }
 

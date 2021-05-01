@@ -1,4 +1,4 @@
-import {getHoursFromSeconds, getMinutesFromSeconds, getRemainingSecondsFromSeconds} from "../lib/time";
+import {getHoursFromSeconds, getMinutesFromSeconds, getRemainingSecondsFromSeconds, concatenateTimeSegments} from "../lib/time";
 
 function TaskCard(props) {
 
@@ -21,30 +21,25 @@ function TaskCard(props) {
       const elapsedMinutes = getMinutesFromSeconds(elapsedTimeInSeconds)
       const elapsedSeconds = getRemainingSecondsFromSeconds(elapsedTimeInSeconds)
   return (
-    <li className="border border-solid rounded-md p-3 mb-4">
-      <h4 className="pb-2 text-lg font-medium">{task.task}</h4>
-      <div className="flex justify-between">
-        <div>
-          <p>
-            Total time: {hoursLeft < 10 ? "0" + hoursLeft : hoursLeft}:
-            {minutesLeft < 10 ? "0" + minutesLeft : minutesLeft}:
-            {secondsLeft < 10 ? "0" + secondsLeft : secondsLeft}
-          </p>
-          <p>Sessions: {numberOfSessions}</p>
-          <p>Session length: {sessionLengthInMinutes} minutes</p>
-          <p>Break length: {breakLengthInMinutes} minutes</p>
-          <p>
-            Progress: {elapsedHours < 10 ? "0" + elapsedHours : elapsedHours}:
-            {elapsedMinutes < 10 ? "0" + elapsedMinutes : elapsedMinutes}:
-            {elapsedSeconds < 10 ? "0" + elapsedSeconds : elapsedSeconds}
-          </p>
+    <li className="task-card">
+      <h4 className="task-card__heading">{task.task}</h4>
+        <div className="task-card__info-container">
+          <div className="task-card__info">
+            Total time <span>{concatenateTimeSegments(hoursLeft, minutesLeft, secondsLeft)}</span>
+          </div>
+          <div className="task-card__info">Sessions <span>{numberOfSessions}</span></div>
+          <div className="task-card__info">Session length <span>{sessionLengthInMinutes} minutes</span> </div>
+          <div className="task-card__info">Break length <span>{breakLengthInMinutes} minutes</span> </div>
+          <div className="task-card__info">
+            Progress <span>{concatenateTimeSegments(elapsedHours, elapsedMinutes, elapsedSeconds)}</span>
+          </div>
         </div>
-
+        <div className="task-card__buttons">
         <button
           onClick={() => {
             onTaskPick(task, index);
           }}
-          className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6"
+          className="button button--small"
         >
           Start
         </button>
@@ -52,11 +47,13 @@ function TaskCard(props) {
           onClick={() => {
             onTaskDelete(task, index);
           }}
-          className="p-1 self-center border-solid border border-black rounded-md my-2 ml-6"
+          className="button button--small"
         >
           Delete
         </button>
-      </div>
+        </div>
+        
+      
     </li>
   );
 }

@@ -7,9 +7,9 @@ function TaskManager(props){
   const { tasks, onTaskPick, onTaskDelete } = props;
   
     return (
-      <div>
-        <h2 className="mb-10 text-center">Task Manager</h2>
-        <ul>
+      <div className="task-manager">
+        <h2 className="task-manager__heading">Task Manager</h2>
+        <ul className="task-manager__list">
           {tasks.map((task, index) => {
             
             return (
