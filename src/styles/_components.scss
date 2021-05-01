@@ -236,6 +236,7 @@
 .history{
    display: flex;
    flex-direction: column;
+   align-items: center;
     &__header{
         @include segmentHeading; 
     }
@@ -244,6 +245,24 @@
         color: #000;
         width: 20rem;
         text-align: center;
+    }
+
+    &__table{
+        border: 1px solid black;
+        margin-bottom: 2rem;
+        border-radius: 3px;
+    }
+    &__th,
+    &__td{
+        border: 1px solid black;
+        padding: 1rem;
+    }
+
+    &__th{
+        font-size: 1.6rem;
+    }
+    &__td{
+        font-size: 1.4rem;
     }
 }
 
