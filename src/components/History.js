@@ -29,8 +29,8 @@ class History extends React.Component {
     console.log(tasks);
 
     return (
-      <div>
-        <h1>Total time spent on tasks</h1>
+      <div className="history">
+        <h1 className="history__header">History</h1>
         <ul>
           {tasks.map((task) => {
             const elapsedHours = getHoursFromSeconds(task.elapsedTimeInSeconds);
@@ -54,7 +54,7 @@ class History extends React.Component {
           data={this.csvData}
           filename={"my-file.csv"}
           headers ={["task name", "total time spent"]}
-          className={`p-1 self-center border-solid border-2 border-black rounded-md mt-4 w-20`}
+          className={`button history__button`}
         >
           Generate CSV report
         </CSVLink>
