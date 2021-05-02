@@ -180,7 +180,7 @@
         grid-column: 2/3;
         transform: skewX(10deg);
         &:last-of-type{
-            margin-bottom: 2rem;;
+            margin-bottom: 2rem;
         }
     }
 
@@ -212,7 +212,6 @@
 }
 
 .task-card{
-    // border: 1px solid black;
     border-radius: 3px;
     margin-bottom: 2rem;
     padding: .8rem;
