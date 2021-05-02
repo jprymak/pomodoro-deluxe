@@ -216,7 +216,7 @@
     grid-template-columns: 1fr minmax(30%, min-content);
     grid-column-gap: 3rem;
     align-items: center;
-    background-color: #fff;
+    background-color: $color-primary-light;
     box-shadow: 0.5rem 0.5rem 4rem rgba(#000, 0.4);
     transition: transform .4s;
     &__heading{
