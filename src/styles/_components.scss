@@ -1,7 +1,7 @@
 .navbar{
     width: 100%;
     padding: 4rem 0 10rem 0;
-    background-image: linear-gradient(to right bottom, rgb(255, 155, 61,), rgb(209, 67, 67));
+    background-image: $backgroundGradient;
     clip-path: polygon(0 0, 100% 0, 100% 60%, 25% 60%, 0 100%);
     display: flex;
     align-items: center;
@@ -31,7 +31,7 @@
             cursor: pointer;
         }
         &:hover{
-            background-color: rgb(255, 155, 61,);
+            background-color: $color-primary-light;
             transform: translateY(-3px);
         }
     }

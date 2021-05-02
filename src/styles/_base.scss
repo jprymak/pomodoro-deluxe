@@ -17,7 +17,7 @@ html {
 body {
     font-family: "Open Sans", sans-serif;
     font-weight: 400;
-    background-image: linear-gradient(to right bottom, rgba(rgb(224, 151, 109), .8), rgba(rgb(187, 73, 8),.8)), url(../assets/tomatoes.jpg);
+    background-image: linear-gradient(to right bottom, rgba($color-primary-light, .8), rgba($color-primary-dark,.8)), url(../assets/tomatoes.jpg);
     background-size: cover;
     min-height: 100vh;
 }
