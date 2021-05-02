@@ -95,10 +95,10 @@
         }
     }
     &--session{
-        background-color: orangered;
+        background-color: $color-primary-light;
     }
     &--break{
-        background-color: black;
+        background-color: $color-primary-dark;
     }
 }
 
