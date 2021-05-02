@@ -120,7 +120,7 @@
     font-size: 1.6rem;
     padding: 1.6rem;
     border: none;
-    background-image: $backgroundGradient;
+    background-color: $color-primary-dark;
     color: #fff;
     border-radius: 100px;
     width: 10rem;
@@ -139,6 +139,9 @@
         font-size: 1.2rem;
         padding: 1.2rem;
         width: 8rem;
+    }
+    &:hover{
+        background-color: $color-primary-light;
     }
 }
 
