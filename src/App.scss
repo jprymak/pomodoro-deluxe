@@ -7,9 +7,9 @@
 
 
 .App{
-    width: 80%;
-    margin: 10rem auto 0 auto;
-    min-height: 85vh;
+    width: 90%;
+    margin: 8rem auto 0 auto;
+    min-height: 90vh;
     background-color: $color-secondary-light;
     border-radius: 4px;
     display: grid;
@@ -20,6 +20,9 @@
     box-shadow: 0 2rem 5rem rgba( #000000, .4);
 
     & >div{
-        position: relative;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        min-width: 70rem;
     }
 }

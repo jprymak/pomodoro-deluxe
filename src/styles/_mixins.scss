@@ -7,8 +7,6 @@
 }
 
 @mixin centerRouteContainerChild{
-    position:absolute;
-    top: 0;
-    left:0;
-    transform: translate(-50%);
+    grid-row: 1/2;
+    grid-column: 1/2;
 }
