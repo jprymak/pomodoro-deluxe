@@ -7,7 +7,7 @@ function NavBar() {
       <Tomato className="navbar__icon"/>
       <ul className="navbar__list">
         <li className="navbar__link">
-          <Link to="/">Current Session</Link>
+          <Link exact to="/">Current Session</Link>
         </li>
         <li className="navbar__link">
           <Link to="/task-creator">Task Creator</Link>

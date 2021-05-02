@@ -105,7 +105,7 @@
 
 .current-session{
     margin-top: -4rem;
-    align-self: start;
+    @include centerRouteContainerChild;
     &__heading{
         @include segmentHeading;
     }
@@ -194,13 +194,14 @@
 .task-manager,
 .task-creator{
     margin-top: -4rem;
+    @include centerRouteContainerChild;
     &__heading{
         @include segmentHeading;
     }
 }
 
 .task-manager{
-    width: auto;
+    width: 40vw;
     &__list{
         list-style: none;
     }
@@ -233,6 +234,7 @@
         font-size: 1.2rem;
         grid-column: 1/2;
         display: flex;
+        align-items: center;
         justify-content: space-between; 
     }
     &__info{
@@ -269,6 +271,7 @@
    display: flex;
    flex-direction: column;
    align-items: center;
+   @include centerRouteContainerChild;
     &__header{
         @include segmentHeading; 
     }

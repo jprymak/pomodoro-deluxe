@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 import TaskCreator from "./components/TaskCreator";
 import TaskManager from "./components/TaskManager";
@@ -149,24 +150,27 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Router>
+        
           <NavBar />
-          <Switch>
-            <Route path="/task-creator">
+         <Route render={({location})=>(
+          <TransitionGroup>
+            <CSSTransition key={location.key} timeout={450} classNames="fade">
+            <Switch location={location}>
+            <Route path="/task-creator" component={TaskCreator}>
               <TaskCreator onTaskCreation={this.handleTaskCreation} />
             </Route>
-            <Route path="/task-manager">
+            <Route path="/task-manager" component={TaskManager}>
               <TaskManager
                 onTaskPick={this.handleTaskPick}
                 onTaskDelete = {this.handleTaskDelete}
                 tasks={this.state.tasks}
               />
             </Route>
-            <Route path="/history">
+            <Route path="/history" component={History}>
               <History tasks={this.state.tasks}
               />
             </Route>
-            <Route path="/">
+            <Route exact path="/" component={CurrentSession}>
               <CurrentSession
                 saveState={this.handleSaveState}
                 currentSession={this.state.currentSession}
@@ -174,7 +178,11 @@ class App extends React.Component {
               />
             </Route>
           </Switch>
-        </Router>
+          </CSSTransition>
+          </TransitionGroup>
+         )}/>
+            
+          
       </div>
     );
   }
