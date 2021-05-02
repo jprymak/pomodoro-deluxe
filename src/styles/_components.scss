@@ -16,6 +16,9 @@
         width:8rem;
         height: 8rem;
         margin-right: auto;
+        &:hover{
+            animation: swing 1s ease-in-out;
+        }
     }
 
     &__link{
