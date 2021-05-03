@@ -22,14 +22,12 @@ class History extends React.Component {
     tasks.forEach((task) => {
       csvData.push([task.task, task.elapsedTimeInSeconds]);
     });
-    console.log(csvData);
     return csvData;
   }
 
   render() {
     const { tasks } = this.props;
 
-    console.log(tasks);
 
     return (
       <div className="history">
