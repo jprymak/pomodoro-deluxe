@@ -30,9 +30,27 @@
             padding: 2rem;
             cursor: pointer;
         }
+        
         &:hover{
             background-color: $color-primary-light;
             transform: translateY(-3px);
+        }
+        &--active {
+            background-color: $color-primary-light;
+            transform: translateY(-3px);
+            position: relative;
+            &::after{
+                content: url(../assets/tomato-svgrepo-com.svg);
+                display: block;
+                width: 2.5rem;
+                height: 2.5rem;
+                position: absolute;
+                top: 120%;
+                left: 45%;
+            }
+            & a{
+                color: white;
+            }
         }
     }
 }
@@ -300,4 +318,6 @@
         font-size: 1.4rem;
     }
 }
+
+
 
