@@ -187,7 +187,7 @@ class CurrentSession extends React.Component {
 
     return (
       <div className="current-session">
-        <h1 className="current-session__heading">Current Session</h1>
+        <h1 className="current-session__heading">Current Session {isPaused ? "(Paused)" : ""}</h1>
         {isPlaying ? this.playAlarm(elapsedTimeInSeconds, totalCycleLengthInSeconds ) : null}
 
         <Timer hours={hours} minutes={minutes} seconds={seconds} />
