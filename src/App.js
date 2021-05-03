@@ -150,27 +150,26 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        
           <NavBar />
          <Route render={({location})=>(
           <TransitionGroup>
             <CSSTransition key={location.key} timeout={450} classNames="fade">
             <Switch location={location}>
-            <Route path="/task-creator" component={TaskCreator}>
-              <TaskCreator onTaskCreation={this.handleTaskCreation} />
+            <Route path="/task-creator" >
+              <TaskCreator onTaskCreation={this.handleTaskCreation}/>
             </Route>
-            <Route path="/task-manager" component={TaskManager}>
+            <Route path="/task-manager" >
               <TaskManager
                 onTaskPick={this.handleTaskPick}
                 onTaskDelete = {this.handleTaskDelete}
                 tasks={this.state.tasks}
               />
             </Route>
-            <Route path="/history" component={History}>
+            <Route path="/history">
               <History tasks={this.state.tasks}
               />
             </Route>
-            <Route exact path="/" component={CurrentSession}>
+            <Route exact path="/">
               <CurrentSession
                 saveState={this.handleSaveState}
                 currentSession={this.state.currentSession}
