@@ -7,6 +7,7 @@ import {
 } from "../lib/time";
 
 import { CSVLink } from "react-csv";
+import { v4 as uuidv4 } from "uuid";
 
 class History extends React.Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class History extends React.Component {
               task.elapsedTimeInSeconds
             );
             return (
-              <tr className="history__tr">
+              <tr key={uuidv4()} className="history__tr">
                 <td className="history__td">{task.task}</td>
                 <td className="history__td">{concatenateTimeSegments(elapsedHours, elapsedMinutes, elapsedSeconds)}</td>
               </tr>
