@@ -150,6 +150,7 @@
         opacity: 0.8;
         filter: blur(1px);
         transform: scale(0.9);
+        pointer-events: none;
     }
     &--small{
         line-height: 1.2rem;
