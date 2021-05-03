@@ -15,7 +15,7 @@ function TaskCreatorForm({
         onSubmit={onSubmit}
         className="form"
       >
-        <label for="task-name" className="form__label">
+        <label htmlFor="task-name" className="form__label">
           What are you doing?
         </label>
         <input
@@ -26,7 +26,7 @@ function TaskCreatorForm({
             type="text"
             required="required"
           />
-        <label for="session-length" className="form__label">
+        <label htmlFor="session-length" className="form__label">
           Set session length in minutes
         </label>
         <input
@@ -37,7 +37,7 @@ function TaskCreatorForm({
             type="number"
             min="1"
           />
-        <label for="break-length" className="form__label">
+        <label htmlFor="break-length" className="form__label">
           Set break length in minutes
         </label>
         <input
@@ -48,7 +48,7 @@ function TaskCreatorForm({
             type="number"
             min="1"
           />
-        <label forr="sessions-count" className="form__label">
+        <label htmlFor="sessions-count" className="form__label">
           Number of sessions
         </label>
         <input
