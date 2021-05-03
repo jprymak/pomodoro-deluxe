@@ -39,6 +39,7 @@
             background-color: $color-primary-light;
             transform: translateY(-3px);
             position: relative;
+            pointer-events: none;
             &::after{
                 content: url(../assets/tomato-svgrepo-com.svg);
                 display: block;
