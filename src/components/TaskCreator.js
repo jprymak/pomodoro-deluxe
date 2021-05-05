@@ -102,9 +102,6 @@ class TaskCreator extends React.Component {
         }
         return { previewBlocks };
       },
-      () => {
-        console.log(this.state.previewBlocks);
-      }
     );
   };
 
