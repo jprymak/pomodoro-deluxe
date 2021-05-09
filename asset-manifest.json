@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/pomodoro-deluxe/static/css/main.7af46b4a.chunk.css",
+    "main.js": "/pomodoro-deluxe/static/js/main.55c5e2e5.chunk.js",
+    "main.js.map": "/pomodoro-deluxe/static/js/main.55c5e2e5.chunk.js.map",
+    "runtime-main.js": "/pomodoro-deluxe/static/js/runtime-main.94b9a50d.js",
+    "runtime-main.js.map": "/pomodoro-deluxe/static/js/runtime-main.94b9a50d.js.map",
+    "static/js/2.ed193cc8.chunk.js": "/pomodoro-deluxe/static/js/2.ed193cc8.chunk.js",
+    "static/js/2.ed193cc8.chunk.js.map": "/pomodoro-deluxe/static/js/2.ed193cc8.chunk.js.map",
+    "static/js/3.d9a12a31.chunk.js": "/pomodoro-deluxe/static/js/3.d9a12a31.chunk.js",
+    "static/js/3.d9a12a31.chunk.js.map": "/pomodoro-deluxe/static/js/3.d9a12a31.chunk.js.map",
+    "index.html": "/pomodoro-deluxe/index.html",
+    "static/css/main.7af46b4a.chunk.css.map": "/pomodoro-deluxe/static/css/main.7af46b4a.chunk.css.map",
+    "static/js/2.ed193cc8.chunk.js.LICENSE.txt": "/pomodoro-deluxe/static/js/2.ed193cc8.chunk.js.LICENSE.txt",
+    "static/media/316837__lalks__alarm-02-short.44287d4b.wav": "/pomodoro-deluxe/static/media/316837__lalks__alarm-02-short.44287d4b.wav",
+    "static/media/320492__lacezio__clock-chime.9ae4accc.wav": "/pomodoro-deluxe/static/media/320492__lacezio__clock-chime.9ae4accc.wav",
+    "static/media/App.scss": "/pomodoro-deluxe/static/media/tomatoes.e6806989.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.94b9a50d.js",
+    "static/js/2.ed193cc8.chunk.js",
+    "static/css/main.7af46b4a.chunk.css",
+    "static/js/main.55c5e2e5.chunk.js"
+  ]
+}
