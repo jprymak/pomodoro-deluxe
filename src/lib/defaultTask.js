@@ -11,6 +11,7 @@ const defaultTask ={
         nextTimeStamp: "",
         isPlaying: false,
         totalTimeSpentInSeconds: 0,
+        hasError: false
 }
 
 export default defaultTask;

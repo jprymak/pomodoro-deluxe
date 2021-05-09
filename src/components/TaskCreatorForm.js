@@ -8,6 +8,7 @@ function TaskCreatorForm({
   onSessionLengthInMinutesChange,
   onBreakLengthInMinutesChange,
   onNumberOfSessionsChange,
+  hasError
 }) {
   return (
     <div className="form-container">
@@ -24,8 +25,8 @@ function TaskCreatorForm({
             onChange={onTaskNameChange}
             className="form__input"
             type="text"
-            required="required"
           />
+          {hasError && <p className="form__error">Make sure that task name is no more than 40 characters long</p>}
         <label htmlFor="session-length" className="form__label">
           Set session length in minutes
         </label>
@@ -35,8 +36,9 @@ function TaskCreatorForm({
             onChange={onSessionLengthInMinutesChange}
             className="form__input"
             type="number"
-            min="1"
+            // min="1"
           />
+          {hasError && <p className="form__error">Make sure that session length is in 10 to 60 minute range</p>}
         <label htmlFor="break-length" className="form__label">
           Set break length in minutes
         </label>
@@ -48,6 +50,7 @@ function TaskCreatorForm({
             type="number"
             min="1"
           />
+          {hasError && <p className="form__error">Make sure that break length is in 5 to 60 minute range</p>}
         <label htmlFor="sessions-count" className="form__label">
           Number of sessions
         </label>
@@ -58,7 +61,9 @@ function TaskCreatorForm({
             className="form__input"
             type="number"
             min="1"
+            max="10"
           />
+          {hasError && <p className="form__error">Make sure that number of sessions is 1 to 10</p>}
         <button className="button">
           Accept
         </button>
