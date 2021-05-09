@@ -13,7 +13,7 @@ function NavBar() {
       <Tomato className="navbar__icon"/>
       <ul className="navbar__list">
         <li className={`navbar__link ${splitLocation[1] === "" ? "navbar__link--active" : ""}`}>
-          <NavLink exact to="/">Current Session</NavLink>
+          <NavLink exact to="/pomodoro-deluxe">Current Session</NavLink>
         </li>
         <li className={`navbar__link ${splitLocation[1] === "task-creator" ? "navbar__link--active" : ""}`}>
           <NavLink to="/task-creator">Task Creator</NavLink>
