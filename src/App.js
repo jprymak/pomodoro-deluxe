@@ -169,7 +169,7 @@ class App extends React.Component {
               <History tasks={this.state.tasks}
               />
             </Route>
-            <Route exact path="/pomodoro-deluxe">
+            <Route exact path="/">
               <CurrentSession
                 saveState={this.handleSaveState}
                 currentSession={this.state.currentSession}
