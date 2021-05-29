@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
 import breakEndsAlarmSfx from "../sounds/316837__lalks__alarm-02-short.wav";
@@ -11,206 +11,205 @@ import {
   getRemainingSecondsFromSeconds,
 } from "../lib/time";
 
-class CurrentSession extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.props.currentSession;
-    this.intervalID = null;
+function CurrentSession({ saveState, currentSession }) {
+  const [elapsedTimeInSeconds, setElapsedTimeInSeconds] = useState(
+    currentSession.elapsedTimeInSeconds
+  );
+  const [isRunning, setIsRunning] = useState(currentSession.isRunning);
+  const [isPaused, setIsPaused] = useState(currentSession.isPaused);
+  const [isPlaying, setIsPlaying] = useState(currentSession.isPlaying);
+  const [nextTimeStampIndex, setNextTimeStampIndex] = useState(
+    currentSession.nextTimeStampIndex
+  );
+  const [nextTimeStamp, setNextTimeStamp] = useState(
+    currentSession.nextTimeStamp
+  );
 
-    const {
-      sessionLengthInMinutes,
-      numberOfSessions,
-      breakLengthInMinutes,
-    } = this.props.currentSession;
-    this.totalCycleLengthInSeconds =
-      (numberOfSessions * sessionLengthInMinutes +
-        breakLengthInMinutes * (numberOfSessions - 1)) *
-      60;
-    this.audioRef = React.createRef();
-  }
+  const intervalID = useRef();
+  const audioRef = useRef();
+  const stateRef = useRef();
 
-  startTimer = () => {
-    if (this.intervalID === null) {
-      this.intervalID = window.setInterval(() => {
-        this.setState(
-          (prevState) => {
-            const elapsedTimeInSeconds = prevState.elapsedTimeInSeconds + 1;
+  const {
+    sessionLengthInMinutes,
+    numberOfSessions,
+    previewBlocks,
+    task,
+    breakLengthInMinutes,
+    alarmTimeStamps,
+  } = currentSession;
 
-            return { elapsedTimeInSeconds };
-          },
-          () => {
-            this.checkIfAlarmIsToBeSetOff();
-          }
-        );
+  const totalCycleLengthInSeconds =
+    (numberOfSessions * sessionLengthInMinutes +
+      breakLengthInMinutes * (numberOfSessions - 1)) *
+    60;
+
+  const totalCycleLengthInMinutes =
+    numberOfSessions * sessionLengthInMinutes +
+    breakLengthInMinutes * (numberOfSessions - 1);
+  const sessionBlockWidth =
+    (sessionLengthInMinutes / totalCycleLengthInMinutes) * 100;
+  const breakBlockWidth =
+    (breakLengthInMinutes / totalCycleLengthInMinutes) * 100;
+
+  const timeLeftInSeconds = totalCycleLengthInSeconds - elapsedTimeInSeconds;
+
+  /// MOUNTING
+  useEffect(() => {
+    setNextTimeStamp(alarmTimeStamps[nextTimeStampIndex]);
+    if (isRunning === true && !isPaused) {
+      startTimer();
+    }
+  }, [alarmTimeStamps, nextTimeStampIndex, isRunning, isPaused]);
+
+  /// UPDATE
+  useEffect(() => {
+    function checkIfAlarmIsToBeSetOff() {
+      const conditions = [
+        elapsedTimeInSeconds >= nextTimeStamp.timeStamp,
+        elapsedTimeInSeconds < nextTimeStamp.timeStamp + 5,
+      ];
+
+      if (conditions.every((condition) => condition === true)) {
+        setIsPlaying(true);
+      } else {
+        setIsPlaying(false);
+      }
+      if (elapsedTimeInSeconds >= nextTimeStamp.timeStamp + 5) {
+        setNextTimeStampIndex((prev) => prev + 1);
+      }
+    }
+
+    checkIfAlarmIsToBeSetOff();
+    if (elapsedTimeInSeconds >= totalCycleLengthInSeconds) {
+      stopTimer();
+    }
+
+    stateRef.current={elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp}
+    saveState(stateRef.current)
+
+  }, [elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp, totalCycleLengthInSeconds]);
+
+/// UNMOUNTING
+  useEffect(() => {  
+      return ()=>{
+        // const state = {elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp}
+        window.clearInterval(intervalID.current)
+        if (isRunning === true) stopTimer();
+        // console.log('lol',state)
+        // saveState({...currentSession, elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp})
+    }
+  }, []);
+
+  function startTimer() {
+    if (!intervalID.current) {
+      intervalID.current = window.setInterval(() => {
+        setElapsedTimeInSeconds((prev) => prev + 1);
       }, 1000);
     }
-  };
-  componentDidMount() {
-    this.setState({
-      nextTimeStamp: this.state.alarmTimeStamps[this.state.nextTimeStampIndex],
-    });
-    if (this.state.isRunning === true && !this.state.isPaused) {
-      this.startTimer();
-    }
   }
 
-  componentDidUpdate() {
-    if (this.state.elapsedTimeInSeconds >= this.totalCycleLengthInSeconds) {
-      this.stopTimer();
-    }
+  // componentWillUnmount() {
+  //   if (this.state.isRunning === true) {
+  //     this.stopTimer();
+  //   }
+  //   this.props.saveState(this.state);
+  // }
+
+  function resetTimeStamp() {
+    setNextTimeStamp(alarmTimeStamps[0]);
   }
 
-  componentWillUnmount() {
-    if (this.state.isRunning === true) {
-      this.stopTimer();
-    }
-    this.props.saveState(this.state);
+  function handleStart() {
+    setIsRunning(true);
+    startTimer();
   }
 
-  checkIfAlarmIsToBeSetOff() {
-    const conditions = [
-      this.state.elapsedTimeInSeconds >= this.state.nextTimeStamp.timeStamp,
-      this.state.elapsedTimeInSeconds < this.state.nextTimeStamp.timeStamp + 5,
-    ];
-    if (conditions.every((condition) => condition === true)) {
-      this.setState({ isPlaying: true });
-    } else {
-      this.setState({ isPlaying: false });
-    }
-    if (
-      this.state.elapsedTimeInSeconds >=
-      this.state.nextTimeStamp.timeStamp + 5
-    ) {
-      this.setNextTimeStampIndex();
-    }
+  function stopTimer() {
+    window.clearInterval(intervalID.current);
+    intervalID.current = null;
   }
 
-  setNextTimeStampIndex = () => {
-    this.setState(
-      (prevState) => {
-        const nextTimeStampIndex = prevState.nextTimeStampIndex + 1;
-        return { nextTimeStampIndex };
-      },
-      () => {
-        this.setNextTimeStamp();
-      }
-    );
-  };
+  function handleStop() {
+    stopTimer();
+    setElapsedTimeInSeconds(0);
+    setIsRunning(false);
+    setIsPaused(false);
+    resetTimeStamp();
+  }
 
-  setNextTimeStamp = () => {
-    this.setState({
-      nextTimeStamp: this.state.alarmTimeStamps[this.state.nextTimeStampIndex],
-    });
-  };
-
-  resetTimeStamp = () => {
-    this.setState({ nextTimeStamp: this.state.alarmTimeStamps[0] });
-  };
-
-  handleStart = () => {
-    this.setState({ isRunning: true });
-    this.startTimer();
-  };
-
-  stopTimer = () => {
-    window.clearInterval(this.intervalID);
-    this.intervalID = null;
-  };
-
-  handleStop = () => {
-    this.stopTimer();
-    this.setState({ elapsedTimeInSeconds: 0, isRunning: false });
-    this.setState({ isPaused: false });
-    this.resetTimeStamp();
-  };
-
-  togglePause = () => {
-    this.setState((prevState) => {
-      const isPaused = !prevState.isPaused;
-      if (this.state.isPaused) {
-        this.startTimer();
+  function togglePause() {
+    setIsPaused((prev) => {
+      if (isPaused) {
+        startTimer();
       } else {
-        this.stopTimer();
+        stopTimer();
       }
-      return { isPaused };
+      return !prev;
     });
-  };
+  }
 
-  playAlarm = (elapsedTimeInSeconds, totalCycleLengthInSeconds) => {
-    if (this.state.isPlaying) {
+  function playAlarm() {
+    if (isPlaying) {
       let audioSrc = null;
-      if (this.state.nextTimeStamp.status === "sessionEnded") {
+      if (nextTimeStamp.status === "sessionEnded") {
         audioSrc = sessionEndsAlarmSfx;
       } else {
         audioSrc = breakEndsAlarmSfx;
       }
       return (
         <audio
-          ref={this.audioRef}
+          ref={audioRef}
           src={audioSrc}
           autoPlay
-          loop={
-            elapsedTimeInSeconds < totalCycleLengthInSeconds ? true : false
-          }
+          loop={elapsedTimeInSeconds < totalCycleLengthInSeconds ? true : false}
         ></audio>
       );
     }
-  };
-
-  render() {
-    const { elapsedTimeInSeconds, isRunning, isPaused, isPlaying } = this.state;
-    const {
-      sessionLengthInMinutes,
-      numberOfSessions,
-      previewBlocks,
-      task,
-      breakLengthInMinutes,
-    } = this.props.currentSession;
-
-    const totalCycleLengthInMinutes =
-      numberOfSessions * sessionLengthInMinutes +
-      breakLengthInMinutes * (numberOfSessions - 1);
-    const sessionBlockWidth =
-      (sessionLengthInMinutes / totalCycleLengthInMinutes) * 100;
-    const breakBlockWidth =
-      (breakLengthInMinutes / totalCycleLengthInMinutes) * 100;
-    const totalCycleLengthInSeconds = totalCycleLengthInMinutes * 60;
-    const timeLeftInSeconds = totalCycleLengthInSeconds - elapsedTimeInSeconds;
-
-    const hours = getHoursFromSeconds(timeLeftInSeconds);
-    const minutes = getMinutesFromSeconds(timeLeftInSeconds);
-    const seconds = getRemainingSecondsFromSeconds(timeLeftInSeconds);
-
-    const currentWidth =
-    (totalCycleLengthInSeconds - timeLeftInSeconds) /
-      totalCycleLengthInSeconds * 100
-
-    return (
-      <div className="current-session">
-        <h1 className="current-session__heading">Current Session {isPaused ? "(Paused)" : ""}</h1>
-        {isPlaying ? this.playAlarm(elapsedTimeInSeconds, totalCycleLengthInSeconds ) : null}
-
-        <Timer hours={hours} minutes={minutes} seconds={seconds} />
-        <ProgressBar
-          isPaused={isPaused}
-          sessionLengthInMinutes={sessionLengthInMinutes}
-          breakLengthInMinutes={breakLengthInMinutes}
-          sessionBlockWidth={sessionBlockWidth}
-          breakBlockWidth={breakBlockWidth}
-          previewBlocks={previewBlocks}
-          task={task}
-          totalCycleLengthInSeconds={totalCycleLengthInSeconds}
-          timeLeftInSeconds={timeLeftInSeconds}
-          currentWidth={currentWidth}
-        />
-        <div className="current-session__buttons">
-          <Button role='Start' isRunning={isRunning} onClick={this.handleStart} />
-          <Button role='Stop' isRunning={isRunning} onClick={this.handleStop} />
-          <Button role='Pause/Resume' isRunning={isRunning} isPaused={isPaused} onClick={this.togglePause} />
-        </div>
-      </div>
-    );
   }
+
+  const hours = getHoursFromSeconds(timeLeftInSeconds);
+  const minutes = getMinutesFromSeconds(timeLeftInSeconds);
+  const seconds = getRemainingSecondsFromSeconds(timeLeftInSeconds);
+
+  const currentWidth =
+    ((totalCycleLengthInSeconds - timeLeftInSeconds) /
+      totalCycleLengthInSeconds) *
+    100;
+
+  return (
+    <div className="current-session">
+      <h1 className="current-session__heading">
+        Current Session {isPaused ? "(Paused)" : ""}
+      </h1>
+      {isPlaying
+        ? playAlarm(elapsedTimeInSeconds, totalCycleLengthInSeconds)
+        : null}
+
+      <Timer hours={hours} minutes={minutes} seconds={seconds} />
+      <ProgressBar
+        isPaused={isPaused}
+        sessionLengthInMinutes={sessionLengthInMinutes}
+        breakLengthInMinutes={breakLengthInMinutes}
+        sessionBlockWidth={sessionBlockWidth}
+        breakBlockWidth={breakBlockWidth}
+        previewBlocks={previewBlocks}
+        task={task}
+        totalCycleLengthInSeconds={totalCycleLengthInSeconds}
+        timeLeftInSeconds={timeLeftInSeconds}
+        currentWidth={currentWidth}
+      />
+      <div className="current-session__buttons">
+        <Button role="Start" isRunning={isRunning} onClick={handleStart} />
+        <Button role="Stop" isRunning={isRunning} onClick={handleStop} />
+        <Button
+          role="Pause/Resume"
+          isRunning={isRunning}
+          isPaused={isPaused}
+          onClick={togglePause}
+        />
+      </div>
+    </div>
+  );
 }
 
 export default CurrentSession;

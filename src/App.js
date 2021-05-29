@@ -143,8 +143,11 @@ class App extends React.Component {
     });
   }
 
-  handleSaveState = (state) => {
-    this.setState({ currentSession: state });
+  handleSaveState = (sentState) => {
+    this.setState((prevState)=>{
+    const updatedCurrentSession = {...prevState.currentSession, ...sentState}
+    return {currentSession: updatedCurrentSession}
+    });
   };
 
   render() {
