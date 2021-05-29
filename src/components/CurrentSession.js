@@ -92,11 +92,8 @@ function CurrentSession({ saveState, currentSession }) {
 /// UNMOUNTING
   useEffect(() => {  
       return ()=>{
-        // const state = {elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp}
         window.clearInterval(intervalID.current)
         if (isRunning === true) stopTimer();
-        // console.log('lol',state)
-        // saveState({...currentSession, elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp})
     }
   }, []);
 
@@ -107,13 +104,6 @@ function CurrentSession({ saveState, currentSession }) {
       }, 1000);
     }
   }
-
-  // componentWillUnmount() {
-  //   if (this.state.isRunning === true) {
-  //     this.stopTimer();
-  //   }
-  //   this.props.saveState(this.state);
-  // }
 
   function resetTimeStamp() {
     setNextTimeStamp(alarmTimeStamps[0]);
