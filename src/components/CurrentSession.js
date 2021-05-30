@@ -27,7 +27,6 @@ function CurrentSession({ saveState, currentSession }) {
 
   const intervalID = useRef();
   const audioRef = useRef();
-  // const stateRef = useRef();
 
   const {
     sessionLengthInMinutes,
@@ -84,7 +83,6 @@ function CurrentSession({ saveState, currentSession }) {
       stopTimer();
     }
 
-    // stateRef.current={elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp}
     saveState({elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp})
 
   }, [elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp, totalCycleLengthInSeconds]);
