@@ -69,6 +69,7 @@ function CurrentSession({ saveState, currentSession }) {
       }
       if (elapsedTimeInSeconds >= nextTimeStamp.timeStamp + 5) {
         setNextTimeStampIndex((prev) => prev + 1);
+        setNextTimeStamp(alarmTimeStamps[nextTimeStampIndex]);
       }
     }
 
@@ -98,7 +99,7 @@ function CurrentSession({ saveState, currentSession }) {
   /// UNMOUNTING
   useEffect(() => {
     return () => {
-      saveState(stateRef.current);
+      // saveState(stateRef.current);
       window.clearInterval(intervalID.current);
     };
   }, [saveState]);
@@ -174,7 +175,7 @@ function CurrentSession({ saveState, currentSession }) {
         Current Session {isPaused ? "(Paused)" : ""}
       </h1>
       {isPlaying
-        ? playAlarm(elapsedTimeInSeconds, totalCycleLengthInSeconds)
+        ? playAlarm()
         : null}
 
       <Timer timeLeftInSeconds={timeLeftInSeconds} />
