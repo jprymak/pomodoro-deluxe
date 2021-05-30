@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Switch, Route} from "react-router-dom";
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
@@ -11,51 +11,50 @@ import History from "./components/History";
 import initialTasks from "./lib/initialTasks";
 import initialSession from "./lib/initialSession";
 
-class App extends React.Component {
-  state = {
-    tasks: [...initialTasks],
-    currentSession: {...initialSession}
-  }
-
-  handleTaskCreation = (newTask) => {
-    this.setState((prevState) => {
-      const tasks = [...prevState.tasks, newTask];
-      return { tasks };
+function App(){
+  
+  const [tasks, setTasks] = useState(initialTasks);
+  const [currentSession, setCurrentSession] = useState(initialSession);
+  
+  const handleTaskCreation = (newTask) => {
+    setTasks((prev) => {
+      const tasks = [...prev, newTask];
+      return tasks;
     });
   };
 
-  handleTaskPick = (task, indexToRemove) => {
-    const previousTask = this.state.currentSession;
-    this.setState({ currentSession: task }, () => {
-    });
-    this.removeTask(task, indexToRemove)
-    this.setState((prevState) => {
-      const tasks = [...prevState.tasks, previousTask];
-      return { tasks };
+  const handleTaskPick = (task, indexToRemove) => {
+    
+    const previousTask = currentSession;
+    setCurrentSession(task);
+    removeTask(task, indexToRemove)
+    
+    setTasks((prev) => {
+      const tasks = [...prev, previousTask];
+      return tasks;
     });
   };
 
-  handleTaskDelete = (task, indexToRemove) =>{
-    this.removeTask(task, indexToRemove)
+  const handleTaskDelete = (task, indexToRemove) =>{
+    removeTask(task, indexToRemove)
   }
 
-  removeTask(task, indexToRemove){
-    this.setState((prevState) => {
-      const tasks = prevState.tasks.filter(
+  const removeTask = (task, indexToRemove)=>{
+    setTasks((prev) => {
+      const tasks = prev.filter(
         (task, index) => index !== indexToRemove
       );
-      return { tasks };
+      return tasks;
     });
   }
 
-  handleSaveState = (sentState) => {
-    this.setState((prevState)=>{
-    const updatedCurrentSession = {...prevState.currentSession, ...sentState}
-    return {currentSession: updatedCurrentSession}
+  const handleSaveState = (sentState) => {
+    setCurrentSession((prev)=>{
+    const updatedCurrentSession = {...prev, ...sentState}
+    return {...updatedCurrentSession}
     });
   };
 
-  render() {
     return (
       <div className="App">
           <NavBar />
@@ -64,24 +63,23 @@ class App extends React.Component {
             <CSSTransition key={location.key} timeout={450} classNames="fade">
             <Switch location={location}>
             <Route path="/task-creator" >
-              <TaskCreator onTaskCreation={this.handleTaskCreation}/>
+              <TaskCreator onTaskCreation={handleTaskCreation}/>
             </Route>
             <Route path="/task-manager" >
               <TaskManager
-                onTaskPick={this.handleTaskPick}
-                onTaskDelete = {this.handleTaskDelete}
-                tasks={this.state.tasks}
+                onTaskPick={handleTaskPick}
+                onTaskDelete = {handleTaskDelete}
+                tasks={tasks}
               />
             </Route>
             <Route path="/history">
-              <History tasks={this.state.tasks}
+              <History tasks={tasks}
               />
             </Route>
             <Route exact path="/">
               <CurrentSession
-                saveState={this.handleSaveState}
-                currentSession={this.state.currentSession}
-                currentSessionState={this.state.currentSessionState}
+                saveState={handleSaveState}
+                currentSession={currentSession}
               />
             </Route>
           </Switch>
@@ -92,7 +90,6 @@ class App extends React.Component {
           
       </div>
     );
-  }
 }
 
 export default App;

@@ -27,6 +27,7 @@ function CurrentSession({ saveState, currentSession }) {
 
   const intervalID = useRef();
   const audioRef = useRef();
+  const stateRef = useRef();
 
   const {
     sessionLengthInMinutes,
@@ -83,16 +84,17 @@ function CurrentSession({ saveState, currentSession }) {
       stopTimer();
     }
 
-    saveState({elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp})
+    stateRef.current = {elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp}
 
-  }, [saveState, elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp, totalCycleLengthInSeconds]);
+  }, [elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp, totalCycleLengthInSeconds]);
 
 /// UNMOUNTING
   useEffect(() => {  
       return ()=>{
+        saveState(stateRef.current)
         window.clearInterval(intervalID.current)
     }
-  }, []);
+  }, [saveState]);
 
   function startTimer() {
     if (!intervalID.current) {
