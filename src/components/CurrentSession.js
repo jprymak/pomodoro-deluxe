@@ -85,13 +85,12 @@ function CurrentSession({ saveState, currentSession }) {
 
     saveState({elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp})
 
-  }, [elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp, totalCycleLengthInSeconds]);
+  }, [saveState, elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp, totalCycleLengthInSeconds]);
 
 /// UNMOUNTING
   useEffect(() => {  
       return ()=>{
         window.clearInterval(intervalID.current)
-        if (isRunning === true) stopTimer();
     }
   }, []);
 
