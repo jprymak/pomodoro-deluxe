@@ -1,45 +1,43 @@
-import { render } from "@testing-library/react";
-import React from "react";
+import React, {useState} from "react";
 import ReactModal from 'react-modal';
 
 import TaskCard from "./TaskCard"
 
 ReactModal.setAppElement('#root');
 
-class TaskManager extends React.Component{
-  constructor(props){
-    super(props)
-    this.state={
-      showModal: false,
-      taskToDelete: "",
-      indexToDelete: ""
-    }
+function TaskManager({ tasks, onTaskPick, onTaskDelete}){
+ 
+
+  const [showModal, setShowModal] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState("");
+  const [indexToDelete, setIndexToDelete] = useState("");
+      
+ 
+  const handleTaskDelete = (task, index) =>{
+    setTaskToDelete(task);
+    setIndexToDelete(index);
+    handleOpenModal();
   }
 
-  handleTaskDelete = (task, index) =>{
-this.setState({taskToDelete: task, indexToDelete: index}, ()=>this.handleOpenModal())
+  const handleDeleteConfirm = () =>{
+    onTaskDelete(taskToDelete, indexToDelete);
+    handleCloseModal();
   }
 
-  handleDeleteConfirm = () =>{
-    this.props.onTaskDelete(this.state.taskToDelete, this.state.indexToDelete);
-    this.handleCloseModal();
+  const handleDeleteCancel = () =>{
+    setTaskToDelete("");
+    setIndexToDelete("");
+    handleCloseModal();
   }
 
-  handleDeleteCancel = () =>{
-    this.setState({taskToDelete: "", indexToDelete: ""})
-    this.handleCloseModal();
-  }
-
-  handleOpenModal = () =>{
-    this.setState({ showModal: true });
+  const handleOpenModal = () =>{
+    setShowModal(true);
   }
   
-  handleCloseModal =() =>{
-    this.setState({ showModal: false });
+  const handleCloseModal =() =>{
+    setShowModal(false);
   }
   
-  render(){
-    const { tasks, onTaskPick} = this.props;
     return (
     <div className="task-manager">
       <h2 className="task-manager__heading">Task Manager</h2>
@@ -47,25 +45,24 @@ this.setState({taskToDelete: task, indexToDelete: index}, ()=>this.handleOpenMod
         {tasks.map((task, index) => {
           
           return (
-            <TaskCard key={task.id} task={task} onTaskPick={onTaskPick} onTaskDelete={this.handleTaskDelete} index={index} />
+            <TaskCard key={task.id} task={task} onTaskPick={onTaskPick} onTaskDelete={handleTaskDelete} index={index} />
           );
         })}
       </ul>
       <ReactModal 
-         isOpen={this.state.showModal}
+         isOpen={showModal}
          contentLabel="onRequestClose Example"
-         onRequestClose={this.handleCloseModal}
+         onRequestClose={handleCloseModal}
          className="modal"
          overlayClassName="overlay"
          shouldCloseOnOverlayClick={false}
       >
-        <p className="modal__text">Are you sure you want to delete task: <span>{this.state.taskToDelete.task}</span></p>
-        <button className="button" onClick={this.handleDeleteConfirm}>Yes</button>
-        <button className="button" onClick={this.handleDeleteCancel}>No</button>
+        <p className="modal__text">Are you sure you want to delete task: <span>{taskToDelete.task}</span></p>
+        <button className="button" onClick={handleDeleteConfirm}>Yes</button>
+        <button className="button" onClick={handleDeleteCancel}>No</button>
       </ReactModal>
     </div>
   )
-      }
   }
 
 export default TaskManager;
