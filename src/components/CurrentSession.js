@@ -5,12 +5,6 @@ import breakEndsAlarmSfx from "../sounds/316837__lalks__alarm-02-short.wav";
 import sessionEndsAlarmSfx from "../sounds/320492__lacezio__clock-chime.wav";
 import Button from "./Button";
 
-import {
-  getHoursFromSeconds,
-  getMinutesFromSeconds,
-  getRemainingSecondsFromSeconds,
-} from "../lib/time";
-
 function CurrentSession({ saveState, currentSession }) {
   const [elapsedTimeInSeconds, setElapsedTimeInSeconds] = useState(
     currentSession.elapsedTimeInSeconds
@@ -156,10 +150,6 @@ function CurrentSession({ saveState, currentSession }) {
     }
   }
 
-  const hours = getHoursFromSeconds(timeLeftInSeconds);
-  const minutes = getMinutesFromSeconds(timeLeftInSeconds);
-  const seconds = getRemainingSecondsFromSeconds(timeLeftInSeconds);
-
   const currentWidth =
     ((totalCycleLengthInSeconds - timeLeftInSeconds) /
       totalCycleLengthInSeconds) *
@@ -174,7 +164,7 @@ function CurrentSession({ saveState, currentSession }) {
         ? playAlarm(elapsedTimeInSeconds, totalCycleLengthInSeconds)
         : null}
 
-      <Timer hours={hours} minutes={minutes} seconds={seconds} />
+      <Timer timeLeftInSeconds={timeLeftInSeconds}/>
       <ProgressBar
         isPaused={isPaused}
         sessionLengthInMinutes={sessionLengthInMinutes}
@@ -183,8 +173,6 @@ function CurrentSession({ saveState, currentSession }) {
         breakBlockWidth={breakBlockWidth}
         previewBlocks={previewBlocks}
         task={task}
-        totalCycleLengthInSeconds={totalCycleLengthInSeconds}
-        timeLeftInSeconds={timeLeftInSeconds}
         currentWidth={currentWidth}
       />
       <div className="current-session__buttons">
