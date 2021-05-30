@@ -6,6 +6,15 @@ import sessionEndsAlarmSfx from "../sounds/320492__lacezio__clock-chime.wav";
 import Button from "./Button";
 
 function CurrentSession({ saveState, currentSession }) {
+  const {
+    sessionLengthInMinutes,
+    numberOfSessions,
+    previewBlocks,
+    task,
+    breakLengthInMinutes,
+    alarmTimeStamps,
+  } = currentSession;
+
   const [elapsedTimeInSeconds, setElapsedTimeInSeconds] = useState(
     currentSession.elapsedTimeInSeconds
   );
@@ -16,21 +25,12 @@ function CurrentSession({ saveState, currentSession }) {
     currentSession.nextTimeStampIndex
   );
   const [nextTimeStamp, setNextTimeStamp] = useState(
-    currentSession.nextTimeStamp
+    alarmTimeStamps[nextTimeStampIndex]
   );
 
   const intervalID = useRef();
   const audioRef = useRef();
   const stateRef = useRef();
-
-  const {
-    sessionLengthInMinutes,
-    numberOfSessions,
-    previewBlocks,
-    task,
-    breakLengthInMinutes,
-    alarmTimeStamps,
-  } = currentSession;
 
   const totalCycleLengthInSeconds =
     (numberOfSessions * sessionLengthInMinutes +
@@ -49,11 +49,10 @@ function CurrentSession({ saveState, currentSession }) {
 
   /// MOUNTING
   useEffect(() => {
-    setNextTimeStamp(alarmTimeStamps[nextTimeStampIndex]);
     if (isRunning === true && !isPaused) {
       startTimer();
     }
-  }, [alarmTimeStamps, nextTimeStampIndex, isRunning, isPaused]);
+  }, [isRunning, isPaused]);
 
   /// UPDATE
   useEffect(() => {
@@ -78,16 +77,30 @@ function CurrentSession({ saveState, currentSession }) {
       stopTimer();
     }
 
-    stateRef.current = {elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp}
+    stateRef.current = {
+      elapsedTimeInSeconds,
+      isRunning,
+      isPaused,
+      isPlaying,
+      nextTimeStampIndex,
+      nextTimeStamp,
+    };
+  }, [
+    elapsedTimeInSeconds,
+    isRunning,
+    isPaused,
+    isPlaying,
+    nextTimeStampIndex,
+    nextTimeStamp,
+    totalCycleLengthInSeconds,
+  ]);
 
-  }, [elapsedTimeInSeconds, isRunning, isPaused, isPlaying, nextTimeStampIndex, nextTimeStamp, totalCycleLengthInSeconds]);
-
-/// UNMOUNTING
-  useEffect(() => {  
-      return ()=>{
-        saveState(stateRef.current)
-        window.clearInterval(intervalID.current)
-    }
+  /// UNMOUNTING
+  useEffect(() => {
+    return () => {
+      saveState(stateRef.current);
+      window.clearInterval(intervalID.current);
+    };
   }, [saveState]);
 
   function startTimer() {
@@ -164,7 +177,7 @@ function CurrentSession({ saveState, currentSession }) {
         ? playAlarm(elapsedTimeInSeconds, totalCycleLengthInSeconds)
         : null}
 
-      <Timer timeLeftInSeconds={timeLeftInSeconds}/>
+      <Timer timeLeftInSeconds={timeLeftInSeconds} />
       <ProgressBar
         isPaused={isPaused}
         sessionLengthInMinutes={sessionLengthInMinutes}
