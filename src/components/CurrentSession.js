@@ -21,12 +21,8 @@ function CurrentSession({ saveState, currentSession }) {
   const [isRunning, setIsRunning] = useState(currentSession.isRunning);
   const [isPaused, setIsPaused] = useState(currentSession.isPaused);
   const [isPlaying, setIsPlaying] = useState(currentSession.isPlaying);
-  const [nextTimeStampIndex, setNextTimeStampIndex] = useState(
-    currentSession.nextTimeStampIndex
-  );
-  const [nextTimeStamp, setNextTimeStamp] = useState(
-    alarmTimeStamps[nextTimeStampIndex]
-  );
+  const [nextTimeStampIndex, setNextTimeStampIndex] = useState(1);
+  const [nextTimeStamp, setNextTimeStamp] = useState(alarmTimeStamps[0]);
 
   const intervalID = useRef();
   const audioRef = useRef();
@@ -62,21 +58,21 @@ function CurrentSession({ saveState, currentSession }) {
         elapsedTimeInSeconds < nextTimeStamp.timeStamp + 5,
       ];
 
-      if (conditions.every((condition) => condition === true)) {
+      if (conditions.every(condition=>condition)){
         setIsPlaying(true);
       } else {
         setIsPlaying(false);
       }
-      if (elapsedTimeInSeconds >= nextTimeStamp.timeStamp + 5) {
-        setNextTimeStampIndex((prev) => prev + 1);
-        setNextTimeStamp(alarmTimeStamps[nextTimeStampIndex]);
-      }
     }
 
-    checkIfAlarmIsToBeSetOff();
-    if (elapsedTimeInSeconds >= totalCycleLengthInSeconds) {
-      stopTimer();
+    if (elapsedTimeInSeconds >= nextTimeStamp.timeStamp + 5) {
+      setNextTimeStampIndex((prev) => prev + 1);
+      setNextTimeStamp(alarmTimeStamps[nextTimeStampIndex]);
     }
+
+    elapsedTimeInSeconds >= totalCycleLengthInSeconds && stopTimer();
+    
+    checkIfAlarmIsToBeSetOff();
 
     stateRef.current = {
       elapsedTimeInSeconds,
@@ -94,12 +90,13 @@ function CurrentSession({ saveState, currentSession }) {
     nextTimeStampIndex,
     nextTimeStamp,
     totalCycleLengthInSeconds,
+    alarmTimeStamps
   ]);
 
   /// UNMOUNTING
   useEffect(() => {
     return () => {
-      // saveState(stateRef.current);
+      saveState(stateRef.current);
       window.clearInterval(intervalID.current);
     };
   }, [saveState]);
