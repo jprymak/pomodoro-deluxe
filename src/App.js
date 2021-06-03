@@ -9,7 +9,6 @@ import CurrentSession from "./components/CurrentSession";
 import History from "./components/History";
 
 import initialTasks from "./lib/initialTasks";
-import initialSession from "./lib/initialSession";
 
 const initialState = {
   tasks: initialTasks,
