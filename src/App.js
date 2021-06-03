@@ -5,7 +5,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import TaskCreator from "./components/TaskCreator";
 import TaskManager from "./components/TaskManager";
 import NavBar from "./components/navbar/NavBar";
-import CurrentSession from "./components/CurrentSession";
+import {CurrentSession, CurrentSessionEmpty} from "./components/CurrentSession";
 import History from "./components/History";
 
 import initialTasks from "./lib/initialTasks";
@@ -106,10 +106,16 @@ function App() {
                 />
               </Route>
               <Route exact path="/">
-                <CurrentSession
+                {
+                  !state.tasks.filter(obj=>obj.isCurrent===true).length ? 
+                  <CurrentSessionEmpty/>
+                  :
+                  <CurrentSession
                   saveState={handleSaveState}
                   currentSession={state.tasks.filter(obj=>obj.isCurrent===true)[0]}
                 />
+                }
+                
               </Route>
             </Switch>
           </CSSTransition>

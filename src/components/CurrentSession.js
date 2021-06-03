@@ -201,4 +201,14 @@ function CurrentSession({ saveState, currentSession }) {
   );
 }
 
-export default CurrentSession;
+function CurrentSessionEmpty(){
+  return (
+    <div className="current-session">
+      <h1 className="current-session__heading">
+        No active tasks
+      </h1>
+    </div>
+  );
+}
+
+export {CurrentSession, CurrentSessionEmpty};
