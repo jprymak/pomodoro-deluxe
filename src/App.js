@@ -13,7 +13,6 @@ import initialSession from "./lib/initialSession";
 
 const initialState = {
   tasks: initialTasks,
-  currentSession: initialSession
 }
 
 function stateReducer(prevState, action) {
@@ -22,7 +21,6 @@ function stateReducer(prevState, action) {
     const { newTask } = action;
     const newTasks = [...prevState.tasks, newTask];
     return {
-      ...prevState,
       tasks: newTasks
     };
   }
@@ -33,29 +31,33 @@ function stateReducer(prevState, action) {
       (task, index) => index !== indexToRemove
     );
     return {
-      ...prevState,
       tasks: newTasks
     };
   }
 
   if (action.type === "PICK") {
     const { indexToRemove, task } = action;
-    const prevTask = prevState.currentSession
-    const newTasks = prevState.tasks.filter(
+    const tasks = prevState.tasks.filter(
       (task, index) => index !== indexToRemove
     );
+    tasks.forEach(obj=>obj.isCurrent=false);
+    const pickedTask = task;
+    pickedTask.isCurrent = true;
+    const updatedTasks = [...tasks, pickedTask]
+    
     return {
-      currentSession: task,
-      tasks: [...newTasks, prevTask]
+      tasks: updatedTasks
     };
 
   }
   if (action.type === "SAVE") {
-    const { sentState } = action;
-    const updatedCurrentSession = { ...prevState.currentSession, ...sentState }
+    const { sentState, id } = action;
+    const sessionToSave = prevState.tasks.filter(task => task.id===id)[0];
+    const filteredTasks = prevState.tasks.filter(task => task.id!==id);
+    const updatedCurrentSession = { ...sessionToSave, ...sentState }
+    console.log(updatedCurrentSession)
     return {
-      ...prevState,
-      currentSession: updatedCurrentSession,
+      tasks: [...filteredTasks, updatedCurrentSession]
     };
 
   }
@@ -77,10 +79,10 @@ function App() {
     stateDispatch({ type: 'DELETE', task, indexToRemove })
   }
 
-  const handleSaveState = (sentState) => {
-    stateDispatch({ type: 'SAVE', sentState })
+  const handleSaveState = (sentState, id) => {
+    stateDispatch({ type: 'SAVE', sentState, id })
   };
-
+  
   return (
     <div className="App">
       <NavBar />
@@ -107,7 +109,7 @@ function App() {
               <Route exact path="/">
                 <CurrentSession
                   saveState={handleSaveState}
-                  currentSession={state.currentSession}
+                  currentSession={state.tasks.filter(obj=>obj.isCurrent===true)[0]}
                 />
               </Route>
             </Switch>

@@ -8,6 +8,7 @@ function TaskCard(props) {
         sessionLengthInMinutes,
         breakLengthInMinutes,
         elapsedTimeInSeconds,
+        isCurrent,
       } = task;
       
       const totalCycleLengthInSeconds =
@@ -21,8 +22,8 @@ function TaskCard(props) {
       const elapsedMinutes = getMinutesFromSeconds(elapsedTimeInSeconds)
       const elapsedSeconds = getRemainingSecondsFromSeconds(elapsedTimeInSeconds)
   return (
-    <li className="task-card">
-      <h4 className="task-card__heading">{task.task}</h4>
+    <li className={`task-card ${isCurrent ? 'task-card--active' : ""}`}>
+      <h4 className="task-card__heading">{task.task} {isCurrent ? '(Active)' : ""}</h4>
         <div className="task-card__info-container">
           <div className="task-card__info">
             Total time <span>{concatenateTimeSegments(hoursLeft, minutesLeft, secondsLeft)}</span>

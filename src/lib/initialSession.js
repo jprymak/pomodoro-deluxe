@@ -29,7 +29,8 @@ const initialSession = {
   ],
     nextTimeStampIndex: 0,
     nextTimeStamp: "",
-    isPlaying: false
+    isPlaying: false,
+    isCurrent: true,
   }
 //   currentSessionState: {},
 

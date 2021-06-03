@@ -13,6 +13,7 @@ function CurrentSession({ saveState, currentSession }) {
     task,
     breakLengthInMinutes,
     alarmTimeStamps,
+    id,
   } = currentSession;
 
   const [elapsedTimeInSeconds, setElapsedTimeInSeconds] = useState(
@@ -96,7 +97,7 @@ function CurrentSession({ saveState, currentSession }) {
   /// UNMOUNTING
   useEffect(() => {
     return () => {
-      saveState(stateRef.current);
+      saveState(stateRef.current, id);
       window.clearInterval(intervalID.current);
     };
   }, [saveState]);
