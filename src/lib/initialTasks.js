@@ -96,7 +96,7 @@ const initialTasks = [
         nextTimeStamp: "",
         isPlaying: false,
         isCurrent: true,
-      }
+    }
     ]
 
     export default initialTasks;

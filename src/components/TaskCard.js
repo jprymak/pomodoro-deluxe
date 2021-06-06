@@ -42,7 +42,7 @@ function TaskCard(props) {
           }}
           className="button button--small"
         >
-          Start
+          Pick
         </button>
         <button
           onClick={() => {
