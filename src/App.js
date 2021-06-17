@@ -2,6 +2,8 @@ import React, { useState, useReducer, useRef, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import { useDispatch, useSelector } from "react-redux";
+
 import TaskCreator from "./components/TaskCreator";
 import TaskManager from "./components/TaskManager";
 import NavBar from "./components/navbar/NavBar";
@@ -11,73 +13,23 @@ import History from "./components/History";
 import breakEndsAlarmSfx from "./sounds/316837__lalks__alarm-02-short.wav";
 import sessionEndsAlarmSfx from "./sounds/320492__lacezio__clock-chime.wav";
 
-import initialTasks from "./lib/initialTasks";
-
-const initialState = {
-  tasks: initialTasks,
-}
 
 
+import { getState } from "./reducers/reducers"
 
-
-function stateReducer(prevState, action) {
-
-  if (action.type === "CREATE") {
-    
-    const { newTask } = action;
-    const newTasks = [...prevState.tasks, newTask];
-    return {
-      tasks: newTasks
-    };
-  }
-
-  if (action.type === "DELETE") {
-    
-    const { indexToRemove } = action;
-    const newTasks = prevState.tasks.filter(
-      (task, index) => index !== indexToRemove
-    );
-    return {
-      tasks: newTasks,
-    };
-  }
-
-  if (action.type === "PICK") {
-    
-    const { indexToRemove, task } = action;
-    let updatedTasks = prevState.tasks.map(obj => {
-      obj.isCurrent = false
-      return obj
-    });
-   
-    const pickedTask = task;
-    pickedTask.isCurrent = true;
-    
-    updatedTasks.splice(indexToRemove, 1, pickedTask)
-   
-    return {
-      tasks: updatedTasks
-    };
-
-  }
-  if (action.type === "UPDATE") {
-    
-    const { currentState, id } = action;
-    let updatedTasks = prevState.tasks;
-    const findIndex = updatedTasks.indexOf(prevState.tasks.find(task => task.id===id))
-    const sessionToUpdate = updatedTasks.filter(obj => obj.isCurrent === true)[0]
-    const updatedCurrentSession = { ...sessionToUpdate, ...currentState.current }
-    updatedTasks.splice(findIndex, 1, updatedCurrentSession)
-    return {
-      tasks: updatedTasks
-    };
-
-  }
-  else return prevState
-}
+import {
+  updateTask,
+  createTask,
+  deleteTask,
+  pickTask
+} from "./actions";
 
 function App() {
-  const [state, stateDispatch] = useReducer(stateReducer, initialState);
+
+  const dispatch = useDispatch();
+
+  const state = useSelector(getState)
+
 
   const currentSession = state.tasks.filter(obj => obj.isCurrent === true)[0]
 
@@ -127,7 +79,7 @@ function App() {
     setNextTimeStampIndex(1)
     setNextTimeStamp(currentSession.alarmTimeStamps[0])
 
-    stateDispatch({ type: 'UPDATE', currentState, id })
+    dispatch(updateTask(currentState, id))
 
   }, [id]);
 
@@ -164,7 +116,7 @@ function App() {
       nextTimeStamp,
     };
 
-    stateDispatch({ type: 'UPDATE', currentState, id })
+    dispatch(updateTask(currentState, id))
   }, [
     elapsedTimeInSeconds,
     isRunning,
@@ -182,7 +134,7 @@ function App() {
     return () => {
       window.clearInterval(intervalID.current);
     };
-  },[]);
+  }, []);
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -246,23 +198,18 @@ function App() {
     });
   }
 
-
-
-
-
-
   ////////////////////////////////////
 
   const handleTaskCreation = (newTask) => {
-    stateDispatch({ type: 'CREATE', newTask })
+    dispatch(createTask(newTask))
   };
 
   const handleTaskPick = (task, indexToRemove) => {
-    stateDispatch({ type: 'PICK', task, indexToRemove })
+    dispatch(pickTask(task, indexToRemove))
   };
 
   const handleTaskDelete = (task, indexToRemove) => {
-    stateDispatch({ type: 'DELETE', task, indexToRemove })
+    dispatch(deleteTask(task, indexToRemove))
   }
 
   return (
