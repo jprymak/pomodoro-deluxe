@@ -1,3 +1,8 @@
+import {useSelector} from "react-redux";
+
+import {isTaskCurrent, getCurrentTask} from "../reducers/reducers"
+
+
 import {getHoursFromSeconds, getMinutesFromSeconds, getRemainingSecondsFromSeconds, concatenateTimeSegments} from "../lib/time";
 
 function TaskCard(props) {
@@ -8,8 +13,9 @@ function TaskCard(props) {
         sessionLengthInMinutes,
         breakLengthInMinutes,
         elapsedTimeInSeconds,
-        isCurrent,
       } = task;
+
+      const isCurrent = useSelector(getCurrentTask)===task;
       
       const totalCycleLengthInSeconds =
         (numberOfSessions * sessionLengthInMinutes +

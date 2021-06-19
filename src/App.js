@@ -13,15 +13,13 @@ import History from "./components/History";
 import breakEndsAlarmSfx from "./sounds/316837__lalks__alarm-02-short.wav";
 import sessionEndsAlarmSfx from "./sounds/320492__lacezio__clock-chime.wav";
 
-
-
-import { getState } from "./reducers/reducers"
+import { getState, getCurrentTask} from "./reducers/reducers"
 
 import {
   updateTask,
   createTask,
   deleteTask,
-  pickTask
+  pickTask,
 } from "./actions";
 
 function App() {
@@ -30,9 +28,8 @@ function App() {
 
   const state = useSelector(getState)
 
-
-  const currentSession = state.tasks.filter(obj => obj.isCurrent === true)[0]
-
+  const currentSession = useSelector(getCurrentTask)
+  
   const {
     sessionLengthInMinutes,
     numberOfSessions,
@@ -59,19 +56,8 @@ function App() {
       breakLengthInMinutes * (numberOfSessions - 1)) *
     60;
 
-
-  /// MOUNTING
   useEffect(() => {
-    if (isRunning === true && !isPaused) {
-      startTimer();
-    }
-  }, [isRunning, isPaused]);
-
-  useEffect(() => {
-
-    window.clearInterval(intervalID.current);
-    intervalID.current = null;
-
+    
     setElapsedTimeInSeconds(currentSession.elapsedTimeInSeconds)
     setIsRunning(currentSession.isRunning)
     setIsPaused(currentSession.isPaused)
@@ -79,7 +65,12 @@ function App() {
     setNextTimeStampIndex(1)
     setNextTimeStamp(currentSession.alarmTimeStamps[0])
 
-    dispatch(updateTask(currentState, id))
+    window.clearInterval(intervalID.current);
+      intervalID.current = null;
+   
+    if (currentSession.isRunning === true && !currentSession.isPaused) {
+      startTimer();
+    }
 
   }, [id]);
 
@@ -132,6 +123,7 @@ function App() {
   /// UNMOUNTING
   useEffect(() => {
     return () => {
+      
       window.clearInterval(intervalID.current);
     };
   }, []);
@@ -158,7 +150,9 @@ function App() {
   }
 
   function startTimer() {
+    
     if (!intervalID.current) {
+      
       intervalID.current = window.setInterval(() => {
         setElapsedTimeInSeconds((prev) => prev + 1);
       }, 1000);
@@ -240,14 +234,14 @@ function App() {
               </Route>
               <Route exact path="/">
                 {
-                  !state.tasks.filter(obj => obj.isCurrent === true).length ?
+                  !currentSession ?
                     <CurrentSessionEmpty />
                     :
                     <CurrentSession
                       onStart={handleStart}
                       onStop={handleStop}
                       onTogglePause={togglePause}
-                      currentSession={state.tasks.filter(obj => obj.isCurrent === true)[0]}
+                      currentSession={currentSession}
                       elapsedTimeInSeconds={elapsedTimeInSeconds}
                       isPaused={isPaused}
                       isRunning={isRunning}

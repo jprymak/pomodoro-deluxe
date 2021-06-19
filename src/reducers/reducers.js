@@ -3,15 +3,17 @@ import initialTasks from "../lib/initialTasks";
 
 const initialState = {
     tasks: initialTasks,
+    currentSessionId: null
   }
   
   export function stateReducer(state = initialState, action = {}) {
-  
+
     if (action.type === "TASK_CREATE") {
       
       const { newTask } = action;
       const newTasks = [...state.tasks, newTask];
       return {
+        ...state,
         tasks: newTasks
       };
     }
@@ -23,37 +25,25 @@ const initialState = {
         (task, index) => index !== indexToRemove
       );
       return {
+        ...state,
         tasks: newTasks,
       };
     }
   
     if (action.type === "TASK_PICK") {
-      const { indexToRemove, task } = action;
-      let updatedTasks = state.tasks.map(obj => {
-        obj.isCurrent = false
-        return obj
-      });
-     
-      const pickedTask = task;
-      pickedTask.isCurrent = true;
-      
-      updatedTasks.splice(indexToRemove, 1, pickedTask)
-     
+      const {task} = action;
       return {
-        tasks: updatedTasks
+        ...state,
+        currentSessionId: task.id
       };
-  
     }
     if (action.type === "TASK_UPDATE") {
       
       const { currentState, id } = action;
-      let updatedTasks = state.tasks;
-      const findIndex = updatedTasks.indexOf(state.tasks.find(task => task.id===id))
-      const sessionToUpdate = updatedTasks.filter(obj => obj.isCurrent === true)[0]
-      const updatedCurrentSession = { ...sessionToUpdate, ...currentState.current }
-      updatedTasks.splice(findIndex, 1, updatedCurrentSession)
+      const tasks = state.tasks.map(task=>task.id === id ? {...task, ...currentState.current} : task)
       return {
-        tasks: updatedTasks
+        ...state,
+        tasks
       };
   
     }
@@ -63,4 +53,7 @@ const initialState = {
 
   ///SELECTORS
 
-  export const getState =(state) =>state
+  export const getState =(state) =>state;
+  export const getCurrentSessionId =(state) =>state.currentSessionId;
+  export const getCurrentTask = (state) => state.tasks.find(task => task.id === getCurrentSessionId(state)) || state.tasks[0];
+  export const isTaskCurrent = (state, task) => getCurrentSessionId(state) === task.id

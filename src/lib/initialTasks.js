@@ -31,7 +31,6 @@ const initialTasks = [
       nextTimeStampIndex: 0,
       nextTimeStamp: "",
       isPlaying: false,
-      isCurrent: false
       },
       {
         id: uuidv4(),
@@ -63,7 +62,6 @@ const initialTasks = [
       nextTimeStampIndex: 0,
       nextTimeStamp: "",
       isPlaying: false,
-      isCurrent: false
       },
       {
         id: uuidv4(),
@@ -95,7 +93,6 @@ const initialTasks = [
         nextTimeStampIndex: 0,
         nextTimeStamp: "",
         isPlaying: false,
-        isCurrent: true,
     }
     ]
 
