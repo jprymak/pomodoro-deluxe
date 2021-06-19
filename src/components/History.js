@@ -1,8 +1,6 @@
 import React from "react";
 import {
-  getHoursFromSeconds,
-  getMinutesFromSeconds,
-  getRemainingSecondsFromSeconds,
+  getHoursMinutesSecondsFromTotalSeconds,
   concatenateTimeSegments,
 } from "../lib/time";
 
@@ -33,21 +31,15 @@ function History({ tasks }) {
         </thead>
         <tbody className="history__tbody">
           {tasks.map((task) => {
-            const elapsedHours = getHoursFromSeconds(task.elapsedTimeInSeconds);
-            const elapsedMinutes = getMinutesFromSeconds(
-              task.elapsedTimeInSeconds
-            );
-            const elapsedSeconds = getRemainingSecondsFromSeconds(
-              task.elapsedTimeInSeconds
-            );
+            const [hours, minutes, seconds] = getHoursMinutesSecondsFromTotalSeconds(task.elapsedTimeInSeconds)
             return (
               <tr key={uuidv4()} className="history__tr">
                 <td className="history__td">{task.task}</td>
                 <td className="history__td">
                   {concatenateTimeSegments(
-                    elapsedHours,
-                    elapsedMinutes,
-                    elapsedSeconds
+                    hours,
+                    minutes,
+                    seconds
                   )}
                 </td>
               </tr>

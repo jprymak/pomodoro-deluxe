@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {isTaskCurrent, getCurrentTask} from "../reducers/reducers"
 
 
-import {getHoursFromSeconds, getMinutesFromSeconds, getRemainingSecondsFromSeconds, concatenateTimeSegments} from "../lib/time";
+import {getHoursMinutesSecondsFromTotalSeconds, concatenateTimeSegments} from "../lib/time";
 
 function TaskCard(props) {
 
@@ -20,13 +20,10 @@ function TaskCard(props) {
       const totalCycleLengthInSeconds =
         (numberOfSessions * sessionLengthInMinutes +
         breakLengthInMinutes * (numberOfSessions - 1))*60;
-        const hoursLeft = getHoursFromSeconds(totalCycleLengthInSeconds)
-        const minutesLeft = getMinutesFromSeconds(totalCycleLengthInSeconds)
-        const secondsLeft = getRemainingSecondsFromSeconds(totalCycleLengthInSeconds)
-
-      const elapsedHours = getHoursFromSeconds(elapsedTimeInSeconds)
-      const elapsedMinutes = getMinutesFromSeconds(elapsedTimeInSeconds)
-      const elapsedSeconds = getRemainingSecondsFromSeconds(elapsedTimeInSeconds)
+      
+      const [hoursLeft, minutesLeft, secondsLeft] = getHoursMinutesSecondsFromTotalSeconds(totalCycleLengthInSeconds);
+      const [elapsedHours, elapsedMinutes, elapsedSeconds] = getHoursMinutesSecondsFromTotalSeconds(elapsedTimeInSeconds);
+      
   return (
     <li className={`task-card ${isCurrent ? 'task-card--active' : ""}`}>
       <h4 className="task-card__heading">{task.task} {isCurrent ? '(Active)' : ""}</h4>
