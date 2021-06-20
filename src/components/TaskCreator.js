@@ -11,14 +11,16 @@ function TaskCreator({onTaskCreation}){
   
   const [taskData, setTaskData] = useState(defaultTask)
   const [hasError, setHasError] = useState(false)
+
+  const {numberOfSessions, breakLengthInMinutes, sessionLengthInMinutes, task} = taskData;
   
 useEffect(()=>{
   function createPreviewBlocks(){
     setTaskData(
       (prev) => {
         const previewBlocks = [];
-        for (let i = 1; i <= taskData.numberOfSessions; i++) {
-          if (i < taskData.numberOfSessions) {
+        for (let i = 1; i <= numberOfSessions; i++) {
+          if (i < numberOfSessions) {
             previewBlocks.push("session", "break");
           } else {
             previewBlocks.push("session");
@@ -29,7 +31,7 @@ useEffect(()=>{
     );
   };
   createPreviewBlocks();
-},[taskData.numberOfSessions])
+},[numberOfSessions])
 
   const handleSubmit = (event)=>{
     event.preventDefault()
@@ -47,7 +49,6 @@ const handleInputChange = (event) =>{
   const property = choosePropertyById(id)
  
   checkIfValueIsAboveLimit(id, value) && setTaskData(prev=>{
-    console.log({...prev, [property]: value })
     return {...prev, [property]: value }
   });
   
@@ -75,10 +76,10 @@ const handleInputChange = (event) =>{
 
   const validate = () =>{
     const conditions = [
-      (taskData.task.length > 0 && taskData.task.length <= 40),
-      taskData.sessionLengthInMinutes >= 10 && taskData.sessionLengthInMinutes <= 60,
-      taskData.breakLengthInMinutes >= 5 && taskData.breakLengthInMinutes <= 60,
-      taskData.numberOfSessions > 0 && taskData.numberOfSessions <= 10,
+      (task.length > 0 && task.length <= 40),
+      sessionLengthInMinutes >= 10 && sessionLengthInMinutes <= 60,
+      breakLengthInMinutes >= 5 && breakLengthInMinutes <= 60,
+      numberOfSessions > 0 && numberOfSessions <= 10,
     ]
 
     return conditions.every(condition=>condition===true);
@@ -88,15 +89,15 @@ const handleInputChange = (event) =>{
 
     const alarmTimeStamps = [];
     let lastTimeStamp = 0;
-    for (let i = 1; i <= taskData.numberOfSessions; i++) {
+    for (let i = 1; i <= numberOfSessions; i++) {
       
-      if (i < taskData.numberOfSessions) {
-        lastTimeStamp = lastTimeStamp + taskData.sessionLengthInMinutes*60
+      if (i < numberOfSessions) {
+        lastTimeStamp = lastTimeStamp + sessionLengthInMinutes*60
         alarmTimeStamps.push({timeStamp: lastTimeStamp, status: "sessionEnded"});
-        lastTimeStamp = lastTimeStamp + taskData.breakLengthInMinutes*60
+        lastTimeStamp = lastTimeStamp + breakLengthInMinutes*60
         alarmTimeStamps.push({timeStamp: lastTimeStamp, status: "breakEnded"});
       } else{
-        lastTimeStamp = lastTimeStamp + taskData.sessionLengthInMinutes*60
+        lastTimeStamp = lastTimeStamp + sessionLengthInMinutes*60
         alarmTimeStamps.push({timeStamp: lastTimeStamp, status: "sessionEnded"});
       }
     }
@@ -110,10 +111,10 @@ const handleInputChange = (event) =>{
         <h1 className="task-creator__heading">TASK CREATOR</h1>
         <TaskCreatorForm
           hasError ={hasError}
-          task={taskData.task}
-          sessionLengthInMinutes={taskData.sessionLengthInMinutes}
-          breakLengthInMinutes={taskData.breakLengthInMinutes}
-          numberOfSessions={taskData.numberOfSessions}
+          task={task}
+          sessionLengthInMinutes={sessionLengthInMinutes}
+          breakLengthInMinutes={breakLengthInMinutes}
+          numberOfSessions={numberOfSessions}
           onSubmit={handleSubmit}
           onInput = {handleInputChange}
         />
