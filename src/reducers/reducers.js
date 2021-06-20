@@ -12,6 +12,7 @@ const initialState = {
       
       const { newTask } = action;
       const newTasks = [...state.tasks, newTask];
+      
       return {
         ...state,
         tasks: newTasks

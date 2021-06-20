@@ -40,43 +40,37 @@ useEffect(()=>{
     else setHasError(true)
   }
 
-  const handleTaskNameChange = (event) => {
-    checkIfValueIsAboveLimit("sessionName", event.target.value) && setTaskData(prev=>{
-      const task = event.target.value
-      return {...prev, task}
-    });
-    
-  };
 
-  const handleSessionLengthInMinutesChange = (event) => {
-    checkIfValueIsAboveLimit("sessionLength", event.target.value) && setTaskData(prev=>{
-      const sessionLengthInMinutes = event.target.value;
-      return {...prev, sessionLengthInMinutes}
-    });
-  };
-
-  const handleBreakLengthInMinutesChange = (event) => {
-    checkIfValueIsAboveLimit("breakLength", event.target.value) && setTaskData(prev=>{
-      const breakLengthInMinutes = event.target.value;
-      return {...prev, breakLengthInMinutes}
-    });
-  };
-
-  const handleNumberOfSessionsChange = (event) => {
-    checkIfValueIsAboveLimit("numberOfSessions", event.target.value) && setTaskData(prev=>{
-      const numberOfSessions = +event.target.value;
-      return {...prev, numberOfSessions}
-    })
-  };
+const handleInputChange = (event) =>{
+  const id=event.target.id;
+  const value = event.target.value;
+  const property = choosePropertyById(id)
+ 
+  checkIfValueIsAboveLimit(id, value) && setTaskData(prev=>{
+    console.log({...prev, [property]: value })
+    return {...prev, [property]: value }
+  });
+  
+}
 
   const checkIfValueIsAboveLimit = (inputName, value) => {
     const inputsUpperLimits = {
-      "sessionName": value.length <= 40,
-      "sessionLength": value <= 60,
-      "breakLength": value <= 60,
-      "numberOfSessions": value <= 10,
+      "task-name": value.length <= 40,
+      "session-length": value <= 60,
+      "break-length": value <= 60,
+      "sessions-count": value <= 10,
     }
     return inputsUpperLimits[inputName]
+  }
+
+  const choosePropertyById = (id) => {
+    const properties = {
+      "task-name": 'task',
+      "session-length": 'sessionLengthInMinutes',
+      "break-length": 'breakLengthInMinutes',
+      "sessions-count": 'numberOfSessions',
+    }
+    return properties[id]
   }
 
   const validate = () =>{
@@ -120,13 +114,8 @@ useEffect(()=>{
           sessionLengthInMinutes={taskData.sessionLengthInMinutes}
           breakLengthInMinutes={taskData.breakLengthInMinutes}
           numberOfSessions={taskData.numberOfSessions}
-          onTaskNameChange={handleTaskNameChange}
-          onSessionLengthInMinutesChange={
-            handleSessionLengthInMinutesChange
-          }
-          onBreakLengthInMinutesChange={handleBreakLengthInMinutesChange}
-          onNumberOfSessionsChange={handleNumberOfSessionsChange}
           onSubmit={handleSubmit}
+          onInput = {handleInputChange}
         />
         <TaskPreview formValue={taskData} />
       </div>

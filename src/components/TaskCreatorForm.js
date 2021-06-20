@@ -4,11 +4,8 @@ function TaskCreatorForm({
   sessionLengthInMinutes,
   breakLengthInMinutes,
   numberOfSessions,
-  onTaskNameChange,
-  onSessionLengthInMinutesChange,
-  onBreakLengthInMinutesChange,
-  onNumberOfSessionsChange,
-  hasError
+  hasError,
+  onInput
 }) {
   return (
     <div className="form-container">
@@ -22,7 +19,7 @@ function TaskCreatorForm({
         <input
             id="task-name"
             value={task}
-            onChange={onTaskNameChange}
+            onInput={onInput}
             className="form__input"
             type="text"
           />
@@ -33,7 +30,7 @@ function TaskCreatorForm({
         <input
             id="session-length"
             value={sessionLengthInMinutes}
-            onChange={onSessionLengthInMinutesChange}
+            onInput={onInput}
             className="form__input"
             type="number"
             // min="1"
@@ -45,7 +42,7 @@ function TaskCreatorForm({
         <input
             id="break-length"
             value={breakLengthInMinutes}
-            onChange={onBreakLengthInMinutesChange}
+            onInput={onInput}
             className="form__input"
             type="number"
             min="1"
@@ -57,7 +54,7 @@ function TaskCreatorForm({
         <input
             id="sessions-count"
             value={numberOfSessions}
-            onChange={onNumberOfSessionsChange}
+            onInput={onInput}
             className="form__input"
             type="number"
             min="1"
