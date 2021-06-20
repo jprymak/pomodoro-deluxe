@@ -22,6 +22,8 @@ import {
   pickTask,
 } from "./actions";
 
+import {getTotalCycleLengthInSeconds} from "./lib/pureFunctions"
+
 function App() {
 
   const dispatch = useDispatch();
@@ -51,10 +53,8 @@ function App() {
   const audioRef = useRef();
   const currentState = useRef();
 
-  const totalCycleLengthInSeconds =
-    (numberOfSessions * sessionLengthInMinutes +
-      breakLengthInMinutes * (numberOfSessions - 1)) *
-    60;
+  const totalCycleLengthInSeconds = getTotalCycleLengthInSeconds(numberOfSessions, sessionLengthInMinutes, breakLengthInMinutes)
+
 
   useEffect(() => {
     

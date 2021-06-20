@@ -4,6 +4,7 @@ import {isTaskCurrent, getCurrentTask} from "../reducers/reducers"
 
 
 import {getHoursMinutesSecondsFromTotalSeconds, concatenateTimeSegments} from "../lib/time";
+import {getTotalCycleLengthInSeconds} from "../lib/pureFunctions"
 
 function TaskCard(props) {
 
@@ -17,9 +18,7 @@ function TaskCard(props) {
 
       const isCurrent = useSelector(getCurrentTask)===task;
       
-      const totalCycleLengthInSeconds =
-        (numberOfSessions * sessionLengthInMinutes +
-        breakLengthInMinutes * (numberOfSessions - 1))*60;
+      const totalCycleLengthInSeconds = getTotalCycleLengthInSeconds(numberOfSessions, sessionLengthInMinutes, breakLengthInMinutes);
       
       const [hoursLeft, minutesLeft, secondsLeft] = getHoursMinutesSecondsFromTotalSeconds(totalCycleLengthInSeconds);
       const [elapsedHours, elapsedMinutes, elapsedSeconds] = getHoursMinutesSecondsFromTotalSeconds(elapsedTimeInSeconds);

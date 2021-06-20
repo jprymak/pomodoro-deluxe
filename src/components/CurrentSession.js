@@ -4,6 +4,8 @@ import Timer from "./Timer";
 
 import Button from "./Button";
 
+import {getTotalCycleLengthInMinutes, getBlockWidth, getTotalCycleLengthInSeconds, getTimeLeftInSeconds, getCurrentWidth} from "../lib/pureFunctions"
+
 function CurrentSession({ onStart, onStop, onTogglePause, currentSession, elapsedTimeInSeconds, isPaused}) {
   const {
     sessionLengthInMinutes,
@@ -15,27 +17,17 @@ function CurrentSession({ onStart, onStop, onTogglePause, currentSession, elapse
   } = currentSession;
 
 
-  const totalCycleLengthInSeconds =
-    (numberOfSessions * sessionLengthInMinutes +
-      breakLengthInMinutes * (numberOfSessions - 1)) *
-    60;
-
-  const totalCycleLengthInMinutes =
-    numberOfSessions * sessionLengthInMinutes +
-    breakLengthInMinutes * (numberOfSessions - 1);
+  const totalCycleLengthInSeconds = getTotalCycleLengthInSeconds(numberOfSessions, sessionLengthInMinutes, breakLengthInMinutes);
     
-  const sessionBlockWidth =
-    (sessionLengthInMinutes / totalCycleLengthInMinutes) * 100;
+  const totalCycleLengthInMinutes = getTotalCycleLengthInMinutes(numberOfSessions, sessionLengthInMinutes, breakLengthInMinutes);
+  
+  const sessionBlockWidth = getBlockWidth(sessionLengthInMinutes, totalCycleLengthInMinutes);
+   
+  const breakBlockWidth = getBlockWidth(breakLengthInMinutes, totalCycleLengthInMinutes);
 
-  const breakBlockWidth =
-    (breakLengthInMinutes / totalCycleLengthInMinutes) * 100;
+  const timeLeftInSeconds = getTimeLeftInSeconds(totalCycleLengthInSeconds, elapsedTimeInSeconds);
 
-  const timeLeftInSeconds = totalCycleLengthInSeconds - elapsedTimeInSeconds;
-
-  const currentWidth =
-    ((totalCycleLengthInSeconds - timeLeftInSeconds) /
-      totalCycleLengthInSeconds) *
-    100;
+  const currentWidth = getCurrentWidth(totalCycleLengthInSeconds, timeLeftInSeconds);
 
   return (
     <div className="current-session">

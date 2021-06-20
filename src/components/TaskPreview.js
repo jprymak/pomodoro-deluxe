@@ -2,6 +2,8 @@ import React from "react";
 
 import ProgressBar from "./ProgressBar";
 
+import {getTotalCycleLengthInMinutes, getBlockWidth} from "../lib/pureFunctions"
+
 function TaskPreview({ formValue }) {
   const {
     task,
@@ -10,9 +12,9 @@ function TaskPreview({ formValue }) {
     breakLengthInMinutes,
     numberOfSessions,
   } = formValue;
-  const totalCycleLengthInMinutes = numberOfSessions*sessionLengthInMinutes + breakLengthInMinutes *(numberOfSessions-1)
-  const sessionBlockWidth = sessionLengthInMinutes/totalCycleLengthInMinutes*100;
-  const breakBlockWidth = breakLengthInMinutes/totalCycleLengthInMinutes*100;
+  const totalCycleLengthInMinutes = getTotalCycleLengthInMinutes(numberOfSessions, sessionLengthInMinutes, breakLengthInMinutes);
+  const sessionBlockWidth = getBlockWidth(sessionLengthInMinutes, totalCycleLengthInMinutes);
+  const breakBlockWidth = getBlockWidth(breakLengthInMinutes, totalCycleLengthInMinutes);
   return (
     <React.Fragment>
     <h2 className="progress-bar__task-name">Preview</h2>
