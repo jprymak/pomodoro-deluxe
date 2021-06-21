@@ -1,9 +1,10 @@
 
 import initialTasks from "../lib/initialTasks";
+import defaultTask from "../lib/defaultTask";
 
 const initialState = {
     tasks: initialTasks,
-    currentSessionId: null
+    currentSessionId: "default"
   }
   
   export function stateReducer(state = initialState, action = {}) {
@@ -20,14 +21,15 @@ const initialState = {
     }
   
     if (action.type === "TASK_DELETE") {
-      const { indexToRemove } = action;
-      console.log(indexToRemove)
-      const newTasks = state.tasks.filter(
-        (task, index) => index !== indexToRemove
+      const { taskToRemove } = action;
+      const tasks = state.tasks.filter(
+        (task) => task.id !== taskToRemove.id 
       );
+      const newCurrentSessionId = state.currentSessionId!==taskToRemove.id ? state.currentSessionId : "default"
       return {
         ...state,
-        tasks: newTasks,
+        tasks,
+        currentSessionId: newCurrentSessionId
       };
     }
   
@@ -56,5 +58,6 @@ const initialState = {
 
   export const getState =(state) =>state;
   export const getCurrentSessionId =(state) =>state.currentSessionId;
-  export const getCurrentTask = (state) => state.tasks.find(task => task.id === getCurrentSessionId(state)) || state.tasks[0];
-  export const isTaskCurrent = (state, task) => getCurrentSessionId(state) === task.id
+  export const getCurrentTask = (state) => state.tasks.find(task => task.id === getCurrentSessionId(state)) || defaultTask;
+  export const isTaskCurrent = (state, task) => getCurrentSessionId(state) === task.id;
+  export const isSessionDefault = (state) => getCurrentSessionId(state) === "default";

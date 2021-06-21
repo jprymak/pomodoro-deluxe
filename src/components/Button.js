@@ -1,7 +1,9 @@
+
 export default function Button(props) {
-    const { isRunning, onClick, role, isPaused } = props;
+    const { isRunning, onClick, role, isPaused, sessionIsDefault } = props;
+    
     const roleClassnames = {
-        "Start": `button ${isRunning ? "button--disabled" : ""}`,
+        "Start": `button ${isRunning || sessionIsDefault ? "button--disabled" : ""}`,
         "Stop": `button ${isRunning ? "" : "button--disabled"}`,
         "Pause/Resume": `button ${isRunning ? "" : "button--disabled"}`,
     }

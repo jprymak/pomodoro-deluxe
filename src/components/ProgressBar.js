@@ -10,10 +10,11 @@ function ProgressBar(props) {
     breakBlockWidth,
     isPaused,
     currentWidth,
+    sessionIsDefault
   } = props;
 
   return (
-    <div className={`progress-bar ${isPaused ? "progress-bar--disabled" : ""}`}>
+    <div className={`progress-bar ${isPaused || sessionIsDefault ? "progress-bar--disabled" : ""}`}>
       <h2 className="progress-bar__task-name">{task}</h2>
       <div className="progress-bar__bar">
         <div

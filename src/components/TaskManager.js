@@ -10,23 +10,19 @@ function TaskManager({ tasks, onTaskPick, onTaskDelete}){
 
   const [showModal, setShowModal] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState("");
-  const [indexToDelete, setIndexToDelete] = useState("");
       
- 
-  const handleTaskDelete = (task, index) =>{
+  const handleTaskDelete = (task) =>{
     setTaskToDelete(task);
-    setIndexToDelete(index);
     handleOpenModal();
   }
 
   const handleDeleteConfirm = () =>{
-    onTaskDelete(taskToDelete, indexToDelete);
+    onTaskDelete(taskToDelete);
     handleCloseModal();
   }
 
   const handleDeleteCancel = () =>{
     setTaskToDelete("");
-    setIndexToDelete("");
     handleCloseModal();
   }
 

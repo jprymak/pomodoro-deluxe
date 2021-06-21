@@ -36,7 +36,7 @@ useEffect(()=>{
   const handleSubmit = (event)=>{
     event.preventDefault()
     if(validate()){
-      onTaskCreation({id: uuidv4(), alarmTimeStamps: createAlarmTimeStamps(),...taskData })
+      onTaskCreation({...taskData, id: uuidv4(), alarmTimeStamps: createAlarmTimeStamps() })
       setTaskData({...defaultTask})
     } 
     else setHasError(true)

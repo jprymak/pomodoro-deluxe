@@ -1,12 +1,16 @@
 import React from "react";
+
+import { useSelector } from "react-redux";
+
 import ProgressBar from "./ProgressBar";
 import Timer from "./Timer";
-
 import Button from "./Button";
 
-import {getTotalCycleLengthInMinutes, getBlockWidth, getTotalCycleLengthInSeconds, getTimeLeftInSeconds, getCurrentWidth} from "../lib/pureFunctions"
+import {getTotalCycleLengthInMinutes, getBlockWidth, getTotalCycleLengthInSeconds, getTimeLeftInSeconds, getCurrentWidth} from "../lib/pureFunctions";
+import {isSessionDefault} from"../reducers/reducers";
 
 function CurrentSession({ onStart, onStop, onTogglePause, currentSession, elapsedTimeInSeconds, isPaused}) {
+
   const {
     sessionLengthInMinutes,
     numberOfSessions,
@@ -16,6 +20,7 @@ function CurrentSession({ onStart, onStop, onTogglePause, currentSession, elapse
     isRunning
   } = currentSession;
 
+  const sessionIsDefault = useSelector(isSessionDefault)
 
   const totalCycleLengthInSeconds = getTotalCycleLengthInSeconds(numberOfSessions, sessionLengthInMinutes, breakLengthInMinutes);
     
@@ -32,7 +37,7 @@ function CurrentSession({ onStart, onStop, onTogglePause, currentSession, elapse
   return (
     <div className="current-session">
       <h1 className="current-session__heading">
-        Current Session {isPaused ? "(Paused)" : ""}
+        {sessionIsDefault ? "No current session! Pick or create a task!" : `Current Session ${isPaused ? "(Paused)" : ""}`}
       </h1>
       <Timer timeLeftInSeconds={timeLeftInSeconds} />
       <ProgressBar
@@ -44,9 +49,10 @@ function CurrentSession({ onStart, onStop, onTogglePause, currentSession, elapse
         previewBlocks={previewBlocks}
         task={task}
         currentWidth={currentWidth}
+        sessionIsDefault={sessionIsDefault}
       />
       <div className="current-session__buttons">
-        <Button role="Start" isRunning={isRunning} onClick={onStart} />
+        <Button role="Start" isRunning={isRunning} onClick={onStart} sessionIsDefault={sessionIsDefault}/>
         <Button role="Stop" isRunning={isRunning} onClick={onStop} />
         <Button
           role="Pause/Resume"

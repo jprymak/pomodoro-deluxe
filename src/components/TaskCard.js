@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 
-import {isTaskCurrent, getCurrentTask} from "../reducers/reducers"
+import {getCurrentTask} from "../reducers/reducers"
 
 
 import {getHoursMinutesSecondsFromTotalSeconds, concatenateTimeSegments} from "../lib/time";
@@ -8,7 +8,7 @@ import {getTotalCycleLengthInSeconds} from "../lib/pureFunctions"
 
 function TaskCard(props) {
 
-    const {task, onTaskPick, onTaskDelete, index} = props
+    const {task, onTaskPick, onTaskDelete} = props
     const {
         numberOfSessions,
         sessionLengthInMinutes,
@@ -40,7 +40,7 @@ function TaskCard(props) {
         <div className="task-card__buttons">
         <button
           onClick={() => {
-            onTaskPick(task, index);
+            onTaskPick(task);
           }}
           className="button button--small"
         >
@@ -48,7 +48,7 @@ function TaskCard(props) {
         </button>
         <button
           onClick={() => {
-            onTaskDelete(task, index);
+            onTaskDelete(task);
           }}
           className="button button--small"
         >

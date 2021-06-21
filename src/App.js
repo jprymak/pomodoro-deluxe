@@ -202,8 +202,8 @@ function App() {
     dispatch(pickTask(task, indexToRemove))
   };
 
-  const handleTaskDelete = (task, indexToRemove) => {
-    dispatch(deleteTask(task, indexToRemove))
+  const handleTaskDelete = (task) => {
+    dispatch(deleteTask(task))
   }
 
   return (
