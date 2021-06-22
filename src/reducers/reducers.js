@@ -1,13 +1,6 @@
-
-import initialTasks from "../lib/initialTasks";
 import defaultTask from "../lib/defaultTask";
 
-const initialState = {
-    tasks: initialTasks,
-    currentSessionId: "default"
-  }
-  
-  export function stateReducer(state = initialState, action = {}) {
+  export function stateReducer(state = {}, action = {}) {
 
     if (action.type === "TASK_CREATE") {
       
